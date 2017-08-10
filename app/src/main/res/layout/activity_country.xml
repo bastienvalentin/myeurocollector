@@ -29,6 +29,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
+        android:id="@+id/ui_fl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -45,5 +46,13 @@
             android:gravity="center"
             android:text="@string/country_loading"/>
     </FrameLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchorGravity="bottom|end"
+        app:layout_anchor="@id/ui_fl_content"
+        android:src="@drawable/plus"
+        android:layout_margin="@dimen/fab_margin"
+        style="@style/AppTheme.FabButton"/>
 
 </android.support.design.widget.CoordinatorLayout>
