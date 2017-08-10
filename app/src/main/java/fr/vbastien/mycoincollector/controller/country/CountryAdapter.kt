@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import fr.vbastien.mycoincollector.R
+import fr.vbastien.mycoincollector.business.CountryBusiness
 import fr.vbastien.mycoincollector.db.Country
 
 /**
@@ -28,7 +29,7 @@ class CountryAdapter(var context: Context, var countryList: List<Country>) : Rec
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         val country : Country? = getItemAt(position)
-        holder?.view?.text = Country.getTranslatedCountryName(context, country?.name)
+        holder?.view?.text = CountryBusiness.getTranslatedCountryName(context, country?.name)
 
         val chevron = ContextCompat.getDrawable(context, R.drawable.chevron_right);
 

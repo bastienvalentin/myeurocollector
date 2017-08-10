@@ -2,15 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "90b5dec4cd717fe0dbb25d55f4d5173c",
+    "identityHash": "533349687fe8f7efdb4e8a8b9c8d84b9",
     "entities": [
       {
-        "tableName": "Country",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT)",
+        "tableName": "country",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`country_id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT)",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "countryId",
+            "columnName": "country_id",
             "affinity": "INTEGER"
           },
           {
@@ -21,17 +21,73 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "country_id"
           ],
           "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "coin",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`coin_id` INTEGER PRIMARY KEY AUTOINCREMENT, `country_id` INTEGER, `name` TEXT, `value` REAL, `img` TEXT, `description` TEXT, FOREIGN KEY(`coin_id`) REFERENCES `country`(`country_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "coinId",
+            "columnName": "coin_id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "countryId",
+            "columnName": "country_id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "img",
+            "columnName": "img",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "coin_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "country",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "coin_id"
+            ],
+            "referencedColumns": [
+              "country_id"
+            ]
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"90b5dec4cd717fe0dbb25d55f4d5173c\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"533349687fe8f7efdb4e8a8b9c8d84b9\")"
     ]
   }
 }
