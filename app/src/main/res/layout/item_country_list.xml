@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:drawablePadding="@dimen/material_component_button_text_left_and_right_padding"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="?android:listPreferredItemHeightSmall"
+    android:paddingEnd="@dimen/material_component_lists_right_padding"
+    android:paddingLeft="@dimen/material_component_lists_right_padding"
+    android:paddingRight="@dimen/material_component_lists_right_padding"
+    android:paddingStart="@dimen/material_component_lists_right_padding" />
