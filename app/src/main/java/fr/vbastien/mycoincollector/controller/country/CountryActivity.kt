@@ -32,7 +32,6 @@ class CountryActivity : LifecycleActivity() {
 
         loadCountries()
         countriesViewModel = ViewModelProviders.of(this).get(AllCountryViewModel::class.java)
-//        countryList = AppDatabase.getInMemoryDatabase(applicationContext).countryModel().findCountries();
         countryAdapter = CountryAdapter(this, countryList)
         ui_rv_countrylist.adapter = countryAdapter
 
@@ -43,6 +42,7 @@ class CountryActivity : LifecycleActivity() {
     fun loadCountries() {
         ui_tv_country_placeholder.visibility = View.VISIBLE
         ui_rv_countrylist.visibility = View.GONE
+        ui_rl_emptyview.visibility = View.GONE
 
         getCountryLoaderObservable()
                 .subscribeOn(Schedulers.io())
@@ -68,9 +68,15 @@ class CountryActivity : LifecycleActivity() {
     }
 
     fun showCountries(countries : List<Country>?) {
-        countryAdapter?.countryList = countries ?: mutableListOf()
+        if (countries == null || countries.isEmpty()) {
+            ui_tv_country_placeholder.visibility = View.GONE
+            ui_rv_countrylist.visibility = View.GONE
+            ui_rl_emptyview.visibility = View.VISIBLE
+        } else {
+            countryAdapter?.countryList = countries
 
-        countryAdapter?.notifyDataSetChanged()
+            countryAdapter?.notifyDataSetChanged()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

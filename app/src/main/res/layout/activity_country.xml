@@ -17,18 +17,18 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:theme="@style/AppTheme.ToolBarStyle"/>
-<!--        <android.support.v7.widget.Toolbar
-            android:id="@+id/ui_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:theme="@style/AppTheme.ToolBarStyle" /> -->
+            app:theme="@style/AppTheme.ToolBarStyle" />
+        <!--        <android.support.v7.widget.Toolbar
+                    android:id="@+id/ui_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:theme="@style/AppTheme.ToolBarStyle" /> -->
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/ui_fl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,20 +39,68 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
         <TextView
             android:id="@+id/ui_tv_country_placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/country_loading"/>
-    </FrameLayout>
+            android:text="@string/country_loading"
+            android:layout_marginLeft="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginRight="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginStart="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginEnd="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginBottom="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+            android:layout_marginTop="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+            />
+
+        <LinearLayout
+            android:id="@+id/ui_rl_emptyview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginRight="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginStart="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginEnd="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginBottom="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+            android:layout_marginTop="@dimen/material_component_bottom_sheet_edge_top_bottom_margins">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="300dp"
+                android:layout_height="350dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/wanted" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_coin_explanation"
+                android:textAlignment="center"/>
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/add_coin_text"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
     <android.support.design.widget.FloatingActionButton
+        style="@style/AppTheme.FabButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_anchorGravity="bottom|end"
-        app:layout_anchor="@id/ui_fl_content"
-        android:src="@drawable/plus"
         android:layout_margin="@dimen/fab_margin"
-        style="@style/AppTheme.FabButton"/>
+        android:src="@drawable/plus"
+        app:layout_anchor="@id/ui_fl_content"
+        app:layout_anchorGravity="bottom|end" />
 
 </android.support.design.widget.CoordinatorLayout>

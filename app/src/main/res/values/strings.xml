@@ -7,4 +7,6 @@
     <string name="germany">Allemagne</string>
 
     <string name="country_loading">Chargement des pays</string>
+    <string name="no_coin_explanation">Aucune pièce n\'est disponible dans la base de donnée</string>
+    <string name="add_coin_text">Ajouter une pièce</string>
 </resources>
