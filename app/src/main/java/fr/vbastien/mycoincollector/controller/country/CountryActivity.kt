@@ -4,20 +4,35 @@ import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toolbar
 import fr.vbastien.mycoincollector.R
+import fr.vbastien.mycoincollector.asyncloader.AsyncCountryLoader
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Country
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_country.*
 import java.lang.Exception
 
-class CountryActivity : LifecycleActivity() {
+class CountryActivity : LifecycleActivity(), AsyncCountryLoader.AsyncCountryLoaderListener<List<Country>> {
+
+    private var disposableList : MutableList<Disposable> = mutableListOf()
+
+    override fun onCountryLoaded(countries: List<Country>) {
+        showCountries(countries)
+        ui_tv_country_placeholder.visibility = View.GONE
+        ui_rv_countrylist.visibility = View.VISIBLE
+    }
+
+    override fun onCountryLoadError(error: Throwable) {
+        Snackbar.make(ui_cl_container, R.string.loading_error, Snackbar.LENGTH_SHORT).show()
+    }
 
     var countryAdapter : CountryAdapter? = null
     var countryList : List<Country> = mutableListOf()
@@ -44,27 +59,7 @@ class CountryActivity : LifecycleActivity() {
         ui_rv_countrylist.visibility = View.GONE
         ui_rl_emptyview.visibility = View.GONE
 
-        getCountryLoaderObservable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext({ countries ->
-                    showCountries(countries)
-                    ui_tv_country_placeholder.visibility = View.GONE
-                    ui_rv_countrylist.visibility = View.VISIBLE
-                })
-                .subscribe()
-    }
-
-    fun getCountryLoaderObservable() : Observable<List<Country>> {
-        return Observable.create({ listener ->
-            try {
-                val countries = AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
-                listener.onNext(countries)
-                listener.onComplete()
-            } catch (e : Exception) {
-                e.printStackTrace();
-            }
-        })
+        disposableList.add(AsyncCountryLoader.loadCountriesFromDataSource(this, this))
     }
 
     fun showCountries(countries : List<Country>?) {
@@ -87,5 +82,10 @@ class CountryActivity : LifecycleActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        disposableList.forEach { disposable -> if (!disposable.isDisposed) disposable.dispose() }
     }
 }
