@@ -1,9 +1,6 @@
 package fr.vbastien.mycoincollector.db
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.Relation
+import android.arch.persistence.room.*
 import android.content.Context
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.util.StringUtil

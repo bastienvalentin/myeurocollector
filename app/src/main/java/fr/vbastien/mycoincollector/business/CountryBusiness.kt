@@ -2,6 +2,7 @@ package fr.vbastien.mycoincollector.business
 
 import android.content.Context
 import fr.vbastien.mycoincollector.R
+import fr.vbastien.mycoincollector.db.Country
 import fr.vbastien.mycoincollector.util.StringUtil
 
 /**
@@ -19,5 +20,10 @@ class CountryBusiness {
                 return context.getString(stringRes)
             }
         }
+
+        var countries : List<Country> = mutableListOf(
+                Country(1, "france"),
+                Country(2, "germany")
+        )
     }
 }

@@ -34,4 +34,6 @@ interface CountryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCountry(country : Country)
 
+    @Query("SELECT COUNT(*) FROM Country ")
+    fun countCountries() : Int
 }

@@ -9,4 +9,9 @@
     <string name="country_loading">Chargement des pays</string>
     <string name="no_coin_explanation">Aucune pièce n\'est disponible dans la base de donnée</string>
     <string name="add_coin_text">Ajouter une pièce</string>
+    <string name="loading_in_progress">Chargement en cours</string>
+    <string name="loading_error">Une erreur est survenue lors du chargement</string>
+    <string name="app_short_explanation">Emportez votre collection de pièces partout avec vous</string>
+    <string name="app_init_error">Une erreur est survenue lors du démarrage de l\'application</string>
+    <string name="retry">Réessayer</string>
 </resources>
