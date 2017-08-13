@@ -53,7 +53,11 @@ dependencies {
     // Because RxAndroid releases are few and far between, it is recommended you also
     // explicitly depend on RxJava's latest version for bug fixes and new features.
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+
+    compile 'com.google.firebase:firebase-core:11.0.4'
+    compile 'com.google.firebase:firebase-database:11.0.4'
 }
 repositories {
     mavenCentral()
 }
+apply plugin: 'com.google.gms.google-services'

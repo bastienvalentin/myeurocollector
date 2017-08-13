@@ -13,5 +13,6 @@ data class Country (
         @PrimaryKey(autoGenerate = true)
         @ColumnInfo(name = "country_id")
         var countryId : Int = 0,
-        var name: String = ""
+        var name: String = "",
+        var since: String = ""
 )
