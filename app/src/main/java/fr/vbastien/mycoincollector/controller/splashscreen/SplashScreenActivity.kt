@@ -99,5 +99,6 @@ class SplashScreenActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountr
     private fun startApplication() {
         val i : Intent = Intent(this, CountryActivity::class.java)
         startActivity(i)
+        finish()
     }
 }
