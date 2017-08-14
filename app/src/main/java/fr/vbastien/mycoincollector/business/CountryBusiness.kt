@@ -44,7 +44,9 @@ class CountryBusiness {
                 Country(20, "andorra", "30/06/2011"),
                 Country(21, "monaco", ""),
                 Country(22, "san_marino", ""),
-                Country(23, "vatican", "")
+                Country(23, "vatican", ""),
+                Country(24, "montenegro", "01/01/2002"),
+                Country(25, "kosovo", "01/01/2002")
         )
 
         fun parseCountryListFromMap(mappedCountries : Map<String, Map<String, String>>) : List<Country> {
