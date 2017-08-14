@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_splash_screen.*
 class SplashScreenActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountryLoaderListener<Int>, AsyncCountryLoader.AsyncCountryInsertListener {
 
     private var disposableList : MutableList<Disposable> = mutableListOf()
+    private var countryCount = 0;
 
     override fun onCountryInserted() {
         startApplication()
@@ -31,11 +32,8 @@ class SplashScreenActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountr
     }
 
     override fun onCountryLoaded(countries: Int) {
-        if (countries == 0) {
-            loadCountryFromRemoteDatabase()
-        } else {
-            startApplication()
-        }
+        countryCount = countries
+        loadCountryFromRemoteDatabase()
     }
 
     fun loadCountryFromRemoteDatabase() {
@@ -49,11 +47,13 @@ class SplashScreenActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountr
                     // whenever data at this location is updated.
                     @Suppress("UNCHECKED_CAST")
                     val value: Map<String, Map<String, String>> = dataSnapshot.getValue(true) as Map<String, Map<String, String>>
-                    val countryList = CountryBusiness.parseCountryListFromMap(value)
+                    var countryList = CountryBusiness.parseCountryListFromMap(value)
                     if (countryList.isNotEmpty()) {
                         insertCountriesIntoDataSource(countryList)
-                    } else {
+                    } else if (countryCount == 0) {
                         insertFallbackCountriesIntoDataSource()
+                    } else {
+                        startApplication()
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
