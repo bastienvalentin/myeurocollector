@@ -10,6 +10,7 @@ import android.widget.TextView
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.business.CountryBusiness
 import fr.vbastien.mycoincollector.db.Country
+import java.util.*
 
 /**
  * Created by vbastien on 03/07/2017.
@@ -29,7 +30,7 @@ class CountryAdapter(var context: Context, var countryList: List<Country>) : Rec
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         val country : Country? = getItemAt(position)
-        holder?.view?.text = CountryBusiness.getTranslatedCountryName(context, country?.name)
+        holder?.view?.text = Locale("", country?.code).getDisplayCountry()
 
         val chevron = ContextCompat.getDrawable(context, R.drawable.chevron_right);
 

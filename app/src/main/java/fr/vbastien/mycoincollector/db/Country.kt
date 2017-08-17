@@ -14,5 +14,6 @@ data class Country (
         @ColumnInfo(name = "country_id")
         var countryId : Int = 0,
         var name: String = "",
+        var code: String = "",
         var since: String = ""
 )

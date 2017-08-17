@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d369539311251f5eb6e0093ea2743a3f",
+    "identityHash": "5ea89efa591ffb71e8470e6ca8a4021a",
     "entities": [
       {
         "tableName": "country",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`country_id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `since` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`country_id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `code` TEXT, `since` TEXT)",
         "fields": [
           {
             "fieldPath": "countryId",
@@ -16,6 +16,11 @@
           {
             "fieldPath": "name",
             "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "code",
+            "columnName": "code",
             "affinity": "TEXT"
           },
           {
@@ -92,7 +97,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d369539311251f5eb6e0093ea2743a3f\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5ea89efa591ffb71e8470e6ca8a4021a\")"
     ]
   }
 }
