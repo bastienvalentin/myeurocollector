@@ -34,7 +34,7 @@ class CountryAdapter(var context: Context, var countryList: List<Country>) : Rec
 
         val chevron = ContextCompat.getDrawable(context, R.drawable.chevron_right);
 
-        val countryFlagRes = FlagDrawableFactory.getFlagFor(country?.name)
+        val countryFlagRes = FlagDrawableFactory.getFlagFor(country?.code)
         if (countryFlagRes != null) {
             val countryFlag = ContextCompat.getDrawable(context, countryFlagRes);
             holder?.view?.setCompoundDrawablesWithIntrinsicBounds(countryFlag, null, chevron, null)
