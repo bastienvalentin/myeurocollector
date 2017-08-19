@@ -59,7 +59,7 @@ class CountryActivity : LifecycleActivity(), AsyncCountryLoader.AsyncCountryLoad
         ui_rv_countrylist.visibility = View.GONE
         ui_rl_emptyview.visibility = View.GONE
 
-        disposableList.add(AsyncCountryLoader.loadCountriesFromDataSource(this, this))
+        disposableList.add(AsyncCountryLoader.loadCountriesWithCoinFromDataSource(this, this))
     }
 
     fun showCountries(countries : List<Country>?) {

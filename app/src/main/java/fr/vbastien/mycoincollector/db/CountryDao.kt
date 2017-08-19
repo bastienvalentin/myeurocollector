@@ -25,8 +25,8 @@ import android.arch.persistence.room.Query
 @Dao
 interface CountryDao {
 
-    @Query("SELECT Country.* FROM Country ")
-    fun findCountries() : List<Country>
+    @Query("SELECT Country.* FROM Country JOIN Coin ON Coin.country_id = Country.country_id")
+    fun findCountriesWithCoin() : List<Country>
 
     @Query("SELECT Country.* FROM Country ")
     fun findCountriesLiveData(): LiveData<List<Country>>

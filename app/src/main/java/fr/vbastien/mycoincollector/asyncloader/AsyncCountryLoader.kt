@@ -25,10 +25,10 @@ class AsyncCountryLoader {
     }
 
     companion object {
-        fun getCountryLoaderObservable(context: Context) : Observable<List<Country>> {
+        fun getCountryWithCoinLoaderObservable(context: Context) : Observable<List<Country>> {
             return Observable.create({ listener ->
                 try {
-                    val countries = AppDatabase.getInMemoryDatabase(context).countryModel().findCountries()
+                    val countries = AppDatabase.getInMemoryDatabase(context).countryModel().findCountriesWithCoin()
                     listener.onNext(countries)
                     listener.onComplete()
                 } catch (e : Exception) {
@@ -38,8 +38,8 @@ class AsyncCountryLoader {
             })
         }
 
-        fun loadCountriesFromDataSource(context: Context, listener : AsyncCountryLoaderListener<List<Country>>) : Disposable {
-            return getCountryLoaderObservable(context)
+        fun loadCountriesWithCoinFromDataSource(context: Context, listener : AsyncCountryLoaderListener<List<Country>>) : Disposable {
+            return getCountryWithCoinLoaderObservable(context)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnNext({ countries -> listener.onCountryLoaded(countries) })
@@ -87,7 +87,7 @@ class AsyncCountryLoader {
             return getAddCountryToDataSourceObservable(context, countryList)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnNext({ countryCount -> listener.onCountryInserted() })
+                    .doOnNext({ listener.onCountryInserted() })
                     .doOnError({ error -> listener.onCountryInsertError(error) })
                     .subscribe()
         }
