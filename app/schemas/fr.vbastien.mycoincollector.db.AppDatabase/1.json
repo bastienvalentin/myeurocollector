@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5ea89efa591ffb71e8470e6ca8a4021a",
+    "identityHash": "96a62b1a45511acd39713c6f0dab63c4",
     "entities": [
       {
         "tableName": "country",
@@ -40,7 +40,7 @@
       },
       {
         "tableName": "coin",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`coin_id` INTEGER PRIMARY KEY AUTOINCREMENT, `country_id` INTEGER, `name` TEXT, `value` REAL, `img` TEXT, `description` TEXT, FOREIGN KEY(`coin_id`) REFERENCES `country`(`country_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`coin_id` INTEGER PRIMARY KEY AUTOINCREMENT, `country_id` INTEGER, `value` REAL, `img` TEXT, `description` TEXT, FOREIGN KEY(`coin_id`) REFERENCES `country`(`country_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "coinId",
@@ -51,11 +51,6 @@
             "fieldPath": "countryId",
             "columnName": "country_id",
             "affinity": "INTEGER"
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT"
           },
           {
             "fieldPath": "value",
@@ -97,7 +92,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5ea89efa591ffb71e8470e6ca8a4021a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"96a62b1a45511acd39713c6f0dab63c4\")"
     ]
   }
 }

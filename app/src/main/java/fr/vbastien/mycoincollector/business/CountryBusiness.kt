@@ -36,8 +36,7 @@ class CountryBusiness {
                 Country(22, "san_marino", "sm", ""),
                 Country(23, "vatican", "va", ""),
                 Country(24, "montenegro", "me", "01/01/2002"),
-                Country(25, "kosovo", "xk", "01/01/2002"),
-                Country(26, "denmark", "dk", "01/01/1999")
+                Country(25, "kosovo", "xk", "01/01/2002")
         )
 
         fun parseCountryListFromMap(mappedCountries : Map<String, Map<String, String>>) : List<Country> {
@@ -47,7 +46,11 @@ class CountryBusiness {
         }
 
         fun parseCountryFromMap(mappedCountry : Map<String, String>) : Country {
-            return Country(mappedCountry.get("id")!!.toInt(), mappedCountry.get("label")!!.toString(), mappedCountry.get("name")!!.toString(), if (mappedCountry.get("since") != null) mappedCountry.get("since").toString() else "")
+            return Country(
+                    mappedCountry.get("id")!!.toInt(),
+                    mappedCountry.get("name")!!.toString(),
+                    mappedCountry.get("code")!!.toString(),
+                    if (mappedCountry.get("since") != null) mappedCountry.get("since").toString() else "")
         }
     }
 }

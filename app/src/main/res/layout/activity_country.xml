@@ -85,6 +85,7 @@
 
             <Button
                 style="?android:attr/borderlessButtonStyle"
+                android:id="@+id/ui_bt_add_coin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
@@ -96,6 +97,7 @@
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/ui_fab_add_coin"
         style="@style/AppTheme.FabButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

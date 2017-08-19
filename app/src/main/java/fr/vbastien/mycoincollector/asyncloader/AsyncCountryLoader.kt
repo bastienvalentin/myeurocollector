@@ -12,6 +12,7 @@ import java.lang.Exception
 
 /**
  * Created by vbastien on 12/08/2017.
+ * perform datasource operation the async way
  */
 class AsyncCountryLoader {
     interface AsyncCountryLoaderListener<T> {
@@ -40,6 +41,28 @@ class AsyncCountryLoader {
 
         fun loadCountriesWithCoinFromDataSource(context: Context, listener : AsyncCountryLoaderListener<List<Country>>) : Disposable {
             return getCountryWithCoinLoaderObservable(context)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnNext({ countries -> listener.onCountryLoaded(countries) })
+                    .doOnError({ error -> listener.onCountryLoadError(error) })
+                    .subscribe()
+        }
+
+        fun getCountryLoaderObservable(context: Context) : Observable<List<Country>> {
+            return Observable.create({ listener ->
+                try {
+                    val countries = AppDatabase.getInMemoryDatabase(context).countryModel().findCountries()
+                    listener.onNext(countries)
+                    listener.onComplete()
+                } catch (e : Exception) {
+                    e.printStackTrace();
+                    listener.onError(e)
+                }
+            })
+        }
+
+        fun loadCountriesFromDataSource(context: Context, listener : AsyncCountryLoaderListener<List<Country>>) : Disposable {
+            return getCountryLoaderObservable(context)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnNext({ countries -> listener.onCountryLoaded(countries) })

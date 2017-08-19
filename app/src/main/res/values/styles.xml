@@ -32,6 +32,13 @@
         <item name="colorButtonNormal">@android:color/white</item>
     </style>
 
+    <style name="AppTheme.RaisedButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@color/material_light_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="AppTheme.FabButton" parent="Widget.Design.FloatingActionButton">
         <item name="android:tint">@color/material_light_white</item>
     </style>

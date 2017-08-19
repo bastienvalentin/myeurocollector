@@ -24,7 +24,6 @@ data class Coin (
     @ColumnInfo(name = "country_id")
     var countryId : Int = 0,
 
-    var name: String = "",
     var value: Double = 0.0,
     var img: String? = null,
     var description: String? = null

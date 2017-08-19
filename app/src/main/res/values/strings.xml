@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MyCoinCollector</string>
+    <string name="add_coin_label">Ajouter une pièce</string>
+    <string name="country_label">Liste des pays</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
     <string name="unknown_country">Pays inconnu</string>
@@ -14,4 +16,10 @@
     <string name="app_short_explanation">Emportez votre collection de pièces partout avec vous</string>
     <string name="app_init_error">Une erreur est survenue lors du démarrage de l\'application</string>
     <string name="retry">Réessayer</string>
+    <string name="description">Description</string>
+    <string name="coin_description_helper">Ajouter ici une description pour la pièce</string>
+    <string name="coin_value">Valeur faciale de la pièce (en euro)</string>
+    <string name="coin_value_helper">Ex : 2 ou 2,00 pour 2€ , 0,50 pour 0,50€</string>
+    <string name="country_name">Nom du pays</string>
+    <string name="add_photo">Ajouter une photo</string>
 </resources>

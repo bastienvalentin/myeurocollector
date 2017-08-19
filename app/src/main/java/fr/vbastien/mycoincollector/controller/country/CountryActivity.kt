@@ -3,6 +3,7 @@ package fr.vbastien.mycoincollector.controller.country
 import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.Menu
@@ -10,7 +11,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toolbar
 import fr.vbastien.mycoincollector.R
+import fr.vbastien.mycoincollector.RequestCodes
 import fr.vbastien.mycoincollector.asyncloader.AsyncCountryLoader
+import fr.vbastien.mycoincollector.controller.coin.CoinAddActivity
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Country
 import io.reactivex.Observable
@@ -42,8 +45,7 @@ class CountryActivity : LifecycleActivity(), AsyncCountryLoader.AsyncCountryLoad
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_country)
-        val toolbar = findViewById(R.id.ui_toolbar) as Toolbar
-        setActionBar(toolbar)
+        setActionBar(ui_toolbar)
 
         loadCountries()
         countriesViewModel = ViewModelProviders.of(this).get(AllCountryViewModel::class.java)
@@ -52,6 +54,13 @@ class CountryActivity : LifecycleActivity(), AsyncCountryLoader.AsyncCountryLoad
 
         countryAdapter?.notifyDataSetChanged()
 
+        ui_fab_add_coin.setOnClickListener { loadAddCoinCountry() }
+        ui_bt_add_coin.setOnClickListener { loadAddCoinCountry() }
+    }
+
+    fun loadAddCoinCountry() {
+        val i : Intent = Intent(this, CoinAddActivity::class.java)
+        startActivityForResult(i, RequestCodes.ADD_COIN_REQUEST_CODE)
     }
 
     fun loadCountries() {

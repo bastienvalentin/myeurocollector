@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "fr.vbastien.mycoincollector"
         minSdkVersion 21
@@ -56,6 +56,7 @@ dependencies {
 
     compile 'com.google.firebase:firebase-core:11.0.4'
     compile 'com.google.firebase:firebase-database:11.0.4'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.7'
 }
 repositories {
     mavenCentral()
