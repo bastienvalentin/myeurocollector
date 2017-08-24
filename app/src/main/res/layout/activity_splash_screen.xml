@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginLeft="@dimen/material_component_bottom_sheet_edge_left_right_margins"
         android:layout_marginRight="@dimen/material_component_bottom_sheet_edge_left_right_margins"
