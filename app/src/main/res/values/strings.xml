@@ -22,4 +22,6 @@
     <string name="coin_value_helper">Ex : 2 ou 2,00 pour 2€ , 0,50 pour 0,50€</string>
     <string name="country_name">Nom du pays</string>
     <string name="add_photo">Ajouter une photo</string>
+    <string name="edit_picture">Modifier la photo</string>
+    <string name="edit_picture_failed">Une erreur est survenue lors de l\'édition de la photo</string>
 </resources>

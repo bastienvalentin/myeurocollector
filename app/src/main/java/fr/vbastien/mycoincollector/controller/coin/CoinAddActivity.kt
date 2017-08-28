@@ -1,6 +1,7 @@
 package fr.vbastien.mycoincollector.controller.coin
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -12,6 +13,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toolbar
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.asyncloader.AsyncCountryLoader
@@ -41,6 +44,15 @@ class CoinAddActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountryLoad
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coin_add)
         setActionBar(ui_toolbar)
+
+        ui_ll_coin_picture.setOnClickListener {
+            CropImage.activity(null)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setCropShape(CropImageView.CropShape.RECTANGLE)
+                    .setFixAspectRatio(true)
+                    .setAspectRatio(1, 1)
+                    .start(this);
+        }
     }
 
     override fun onStart() {
@@ -134,5 +146,20 @@ class CoinAddActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountryLoad
         internal class ViewHolder {
             var countryName: TextView? = null
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                ui_iv_coin_picture.setImageURI(result.uri)
+                ui_ll_coin_picture.visibility = View.GONE
+                ui_iv_coin_picture.visibility = View.VISIBLE
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Snackbar.make(ui_cl_cointainer, R.string.edit_picture_failed, Snackbar.LENGTH_LONG).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
