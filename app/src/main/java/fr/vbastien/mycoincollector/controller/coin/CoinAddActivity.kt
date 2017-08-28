@@ -49,6 +49,8 @@ class CoinAddActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountryLoad
             CropImage.activity(null)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setCropShape(CropImageView.CropShape.RECTANGLE)
+                    .setAllowFlipping(false)
+                    .setAllowCounterRotation(false)
                     .setFixAspectRatio(true)
                     .setAspectRatio(1, 1)
                     .start(this);

@@ -66,7 +66,7 @@
             <fr.vbastien.mycoincollector.util.CustomTextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 app:helperText="@string/coin_value_helper"
                 app:helperTextColor="@color/material_grey_400">
 
@@ -80,7 +80,7 @@
             <fr.vbastien.mycoincollector.util.CustomTextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 app:helperText="@string/coin_description_helper"
                 app:helperTextColor="@color/material_grey_400">
 
@@ -127,7 +127,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/add_coin_text"
-                android:theme="@style/AppTheme.RaisedButton" />
+                android:theme="@style/AppTheme.RaisedButton"
+                android:layout_marginBottom="32dp"/>
         </LinearLayout>
     </ScrollView>
 </android.support.design.widget.CoordinatorLayout>

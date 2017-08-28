@@ -42,5 +42,8 @@
     <style name="AppTheme.FabButton" parent="Widget.Design.FloatingActionButton">
         <item name="android:tint">@color/material_light_white</item>
     </style>
-
+    <style name="CropperTheme" parent="Base.Theme.AppCompat">
+        <item name="colorPrimary">@color/material_blue_500</item>
+        <item name="colorPrimaryDark">@color/material_blue_700</item>
+    </style>
 </resources>

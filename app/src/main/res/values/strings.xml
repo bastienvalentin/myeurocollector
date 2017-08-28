@@ -24,4 +24,13 @@
     <string name="add_photo">Ajouter une photo</string>
     <string name="edit_picture">Modifier la photo</string>
     <string name="edit_picture_failed">Une erreur est survenue lors de l\'édition de la photo</string>
+
+    <string name="crop_image_activity_title">Ajouter une photo</string>
+    <string name="crop_image_menu_rotate_left">Tourner dans le sens inverse des aiguilles</string>
+    <string name="crop_image_menu_rotate_right">Tourner</string>
+    <string name="crop_image_menu_crop">Découper</string>
+    <string name="crop_image_menu_flip">Retourner</string>
+    <string name="crop_image_menu_flip_horizontally">Retourner horizontalement</string>
+    <string name="crop_image_menu_flip_vertically">Retourner verticalement</string>
+    <string name="pick_image_intent_chooser_title">Selectionner une source</string>
 </resources>
