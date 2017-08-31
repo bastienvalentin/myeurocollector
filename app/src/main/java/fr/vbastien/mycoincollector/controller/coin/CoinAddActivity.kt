@@ -21,6 +21,7 @@ import fr.vbastien.mycoincollector.controller.country.FlagDrawableFactory
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Coin
 import fr.vbastien.mycoincollector.db.Country
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -82,8 +83,24 @@ class CoinAddActivity : AppCompatActivity() {
         coin.value = coinValue
         coin.description = description
         coin.img = imageUri.toString()
-//        AppDatabase.getInMemoryDatabase(this).coinModel().insertCoin()
 
+        disposableList.add(Completable.fromAction { AppDatabase.getInMemoryDatabase(this).coinModel().insertCoin(coin) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    Snackbar.make(ui_cl_cointainer, R.string.coin_added, Snackbar.LENGTH_SHORT).show()
+                    resetFields()
+                }
+                .doOnError { t : Throwable -> Snackbar.make(ui_cl_cointainer, R.string.coin_addition_error, Snackbar.LENGTH_SHORT) }
+                .subscribe())
+    }
+
+    fun resetFields() {
+        ui_sp_country.setSelection(0)
+        ui_et_coin_value.setText("")
+        ui_et_coin_description.setText("")
+        ui_iv_coin_picture.visibility = View.GONE
+        ui_ll_coin_picture.visibility = View.VISIBLE
     }
 
     override fun onStart() {

@@ -36,5 +36,7 @@
 
     <string name="mandatory_field">Champ obligatoire</string>
     <string name="coin_value_must_be_positive">La valeur faciale doit être positive. Si aucune valeur ne correspond renseignez 0</string>
+    <string name="coin_added">Pièce ajoutée</string>
+    <string name="coin_addition_error">Impossible d\'ajouter la pièce</string>
 
 </resources>
