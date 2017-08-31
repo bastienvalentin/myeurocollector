@@ -2,6 +2,7 @@ package fr.vbastien.mycoincollector.controller.coin
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -19,6 +20,8 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.asyncloader.AsyncCountryLoader
 import fr.vbastien.mycoincollector.controller.country.FlagDrawableFactory
+import fr.vbastien.mycoincollector.db.AppDatabase
+import fr.vbastien.mycoincollector.db.Coin
 import fr.vbastien.mycoincollector.db.Country
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_coin_add.*
@@ -28,6 +31,7 @@ class CoinAddActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountryLoad
 
     private var countryList : List<Country> = mutableListOf()
     private var countryAdapter : CountrySpinnerAdapter? = null
+    private var imageUri : Uri? = null
 
     override fun onCountryLoaded(countries: List<Country>) {
         this.countryList = countries
@@ -55,6 +59,29 @@ class CoinAddActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountryLoad
                     .setAspectRatio(1, 1)
                     .start(this);
         }
+
+        ui_bt_add_coin.setOnClickListener { onAddButtonClick() }
+    }
+
+    private fun onAddButtonClick() {
+        val selectedCountry : Country = ui_sp_country.selectedItem as Country
+        val coinValue : Double? = ui_et_coin_value.text.toString().toDoubleOrNull()
+        if (coinValue == null) {
+            ui_et_coin_value.error = getString(R.string.mandatory_field)
+            return
+        }
+        if (coinValue < 0) {
+            ui_et_coin_value.error = getString(R.string.coin_value_must_be_positive)
+            return
+        }
+        val description = ui_et_coin_description.text.toString()
+        val coin = Coin()
+        coin.countryId = selectedCountry.countryId
+        coin.value = coinValue
+        coin.description = description
+        coin.img = imageUri.toString()
+//        AppDatabase.getInMemoryDatabase(this).coinModel().insertCoin()
+
     }
 
     override fun onStart() {
@@ -154,6 +181,7 @@ class CoinAddActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountryLoad
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
+                imageUri = result.uri
                 ui_iv_coin_picture.setImageURI(result.uri)
                 ui_ll_coin_picture.visibility = View.GONE
                 ui_iv_coin_picture.visibility = View.VISIBLE
