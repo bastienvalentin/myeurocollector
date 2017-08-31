@@ -6,32 +6,35 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import com.google.firebase.database.*
 import fr.vbastien.mycoincollector.R
-import fr.vbastien.mycoincollector.asyncloader.AsyncCountryLoader
 import fr.vbastien.mycoincollector.business.CountryBusiness
 import fr.vbastien.mycoincollector.controller.country.CountryActivity
+import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Country
+import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 
 
-class SplashScreenActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountryLoaderListener<Int>, AsyncCountryLoader.AsyncCountryInsertListener {
+class SplashScreenActivity : AppCompatActivity() {
 
     private var disposableList : MutableList<Disposable> = mutableListOf()
     private var countryCount = 0;
 
-    override fun onCountryInserted() {
+    fun onCountryInserted() {
         startApplication()
     }
 
-    override fun onCountryInsertError(error: Throwable) {
+    fun onCountryInsertError(error: Throwable) {
         Snackbar.make(ui_cl_container, R.string.app_init_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry, { insertFallbackCountriesIntoDataSource() })
     }
 
-    override fun onCountryLoadError(error: Throwable) {
+    fun onCountryLoadError(error: Throwable) {
         Snackbar.make(ui_cl_container, R.string.app_init_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry, { countCountryInDataSource() })
     }
 
-    override fun onCountryLoaded(countries: Int) {
+    fun onCountryLoaded(countries: Int) {
         countryCount = countries
         loadCountryFromRemoteDatabase()
     }
@@ -70,15 +73,25 @@ class SplashScreenActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountr
     }
 
     fun insertCountriesIntoDataSource(countryList : List<Country>) {
-        disposableList.add(AsyncCountryLoader.insertCountryIntoDataSource(this, this, countryList))
+        disposableList.add(Completable.fromAction { countryList.forEach { country -> AppDatabase.getInMemoryDatabase(this).countryModel().insertCountry(country) } }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete { onCountryInserted() }
+                .doOnError { t : Throwable -> onCountryInsertError(t) }
+                .subscribe())
     }
 
     fun insertFallbackCountriesIntoDataSource() {
-        disposableList.add(AsyncCountryLoader.insertCountryIntoDataSource(this, this, CountryBusiness.countries))
+        insertCountriesIntoDataSource(CountryBusiness.countries)
     }
 
     fun countCountryInDataSource() {
-        disposableList.add(AsyncCountryLoader.loadCountryCountFromDataSource(this, this))
+        disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().countCountries()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .doOnError { t: Throwable -> onCountryLoadError(t) }
+                .doOnSuccess { count : Int -> onCountryLoaded(count) }
+                .subscribe())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

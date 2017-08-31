@@ -20,12 +20,13 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
+import io.reactivex.Maybe
 
 @Dao
 interface CoinDao {
 
     @Query("SELECT Coin.* FROM Coin")
-    fun findCoins() : List<Coin>
+    fun findCoins() : Maybe<List<Coin>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoin(coin : Coin)

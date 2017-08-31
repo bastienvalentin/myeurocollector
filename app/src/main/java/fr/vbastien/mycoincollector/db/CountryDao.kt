@@ -21,22 +21,21 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
+import io.reactivex.Maybe
+import io.reactivex.Single
 
 @Dao
 interface CountryDao {
 
     @Query("SELECT Country.* FROM Country JOIN Coin ON Coin.country_id = Country.country_id")
-    fun findCountriesWithCoin() : List<Country>
+    fun findCountriesWithCoin() : Maybe<List<Country>>
 
     @Query("SELECT Country.* FROM Country")
-    fun findCountries() : List<Country>
-
-    @Query("SELECT Country.* FROM Country ")
-    fun findCountriesLiveData(): LiveData<List<Country>>
+    fun findCountries() : Maybe<List<Country>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCountry(country : Country)
 
     @Query("SELECT COUNT(*) FROM Country ")
-    fun countCountries() : Int
+    fun countCountries() : Single<Int>
 }

@@ -13,32 +13,32 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toolbar
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 
 import fr.vbastien.mycoincollector.R
-import fr.vbastien.mycoincollector.asyncloader.AsyncCountryLoader
 import fr.vbastien.mycoincollector.controller.country.FlagDrawableFactory
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Coin
 import fr.vbastien.mycoincollector.db.Country
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_coin_add.*
 import java.util.*
 
-class CoinAddActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountryLoaderListener<List<Country>> {
+class CoinAddActivity : AppCompatActivity() {
 
     private var countryList : List<Country> = mutableListOf()
     private var countryAdapter : CountrySpinnerAdapter? = null
     private var imageUri : Uri? = null
 
-    override fun onCountryLoaded(countries: List<Country>) {
+    fun onCountryLoaded(countries: List<Country>) {
         this.countryList = countries
         initView()
     }
 
-    override fun onCountryLoadError(error: Throwable) {
+    fun onCountryLoadError(error: Throwable) {
         Snackbar.make(ui_cl_cointainer, R.string.loading_error, Snackbar.LENGTH_LONG);
     }
 
@@ -92,7 +92,12 @@ class CoinAddActivity : AppCompatActivity(), AsyncCountryLoader.AsyncCountryLoad
             ui_ll_content.visibility = View.INVISIBLE
             ui_pb_loading.visibility = View.VISIBLE
             // TODO add a fake view
-            disposableList.add(AsyncCountryLoader.loadCountriesFromDataSource(this, this))
+            disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .doOnError { t : Throwable -> onCountryLoadError(t) }
+                    .doOnSuccess { countries : List<Country> -> onCountryLoaded(countries) }
+                    .subscribe())
         }
     }
 

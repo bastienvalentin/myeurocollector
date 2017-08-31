@@ -44,15 +44,12 @@ dependencies {
     compile 'android.arch.persistence.room:runtime:' + rootProject.archRoomVersion;
     annotationProcessor 'android.arch.lifecycle:compiler:' + rootProject.archRoomVersion;
     kapt 'android.arch.persistence.room:compiler:' + rootProject.archRoomVersion;
+    compile "android.arch.persistence.room:rxjava2:" + rootProject.archRoomVersion;
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     compile 'com.dmitrymalkovich.android:material-design-dimens:1.4'
 
     compile 'com.facebook.stetho:stetho:1.5.0'
-
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    // Because RxAndroid releases are few and far between, it is recommended you also
-    // explicitly depend on RxJava's latest version for bug fixes and new features.
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
 
     compile 'com.google.firebase:firebase-core:11.0.4'
     compile 'com.google.firebase:firebase-database:11.0.4'
