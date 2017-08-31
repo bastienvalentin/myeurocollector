@@ -15,5 +15,7 @@ data class Country (
         var countryId : Int = 0,
         var name: String = "",
         var code: String = "",
-        var since: String = ""
+        var since: String = "",
+        @Ignore
+        var localeName: String = ""
 )

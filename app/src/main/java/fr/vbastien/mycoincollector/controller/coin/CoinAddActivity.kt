@@ -25,7 +25,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_coin_add.*
+import java.text.Normalizer
 import java.util.*
+import kotlin.Comparator
 
 class CoinAddActivity : AppCompatActivity() {
 
@@ -96,9 +98,27 @@ class CoinAddActivity : AppCompatActivity() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .doOnError { t : Throwable -> onCountryLoadError(t) }
-                    .doOnSuccess { countries : List<Country> -> onCountryLoaded(countries) }
+                    .doOnSuccess { countries : List<Country> ->
+                        sortCountriesByLocaleName(countries)
+                        onCountryLoaded(countries)
+                    }
                     .subscribe())
         }
+    }
+
+    private fun sortCountriesByLocaleName(countries : List<Country>) {
+        countries.forEach { country -> country.localeName = Locale("", country.code).getDisplayCountry() }
+        Collections.sort(countries, object : Comparator<Country> {
+            override fun compare(p0: Country, p1: Country): Int {
+                val p0localNameStripped = Normalizer.normalize(p0.localeName, Normalizer.Form.NFD)
+                p0localNameStripped.replace("[^\\p{ASCII}]", "")
+
+                val p1localNameStripped = Normalizer.normalize(p1.localeName, Normalizer.Form.NFD)
+                p1localNameStripped.replace("[^\\p{ASCII}]", "")
+
+                return p0localNameStripped.compareTo(p1localNameStripped)
+            }
+        })
     }
 
     private fun initView() {
