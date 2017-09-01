@@ -16,7 +16,6 @@
 
 package fr.vbastien.mycoincollector.db
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -33,7 +32,7 @@ interface CountryDao {
     @Query("SELECT Country.* FROM Country")
     fun findCountries() : Maybe<List<Country>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCountry(country : Country)
 
     @Query("SELECT COUNT(*) FROM Country ")
