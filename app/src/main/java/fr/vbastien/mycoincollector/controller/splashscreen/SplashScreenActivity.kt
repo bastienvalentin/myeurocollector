@@ -50,7 +50,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     // whenever data at this location is updated.
                     @Suppress("UNCHECKED_CAST")
                     val value: Map<String, Map<String, String>> = dataSnapshot.getValue(true) as Map<String, Map<String, String>>
-                    var countryList = CountryBusiness.parseCountryListFromMap(value)
+                    val countryList = CountryBusiness.parseCountryListFromMap(value)
                     if (countryList.isNotEmpty()) {
                         insertCountriesIntoDataSource(countryList)
                     } else if (countryCount == 0) {
