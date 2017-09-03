@@ -64,6 +64,24 @@ class CoinAddActivity : AppCompatActivity() {
         }
 
         ui_bt_add_coin.setOnClickListener { onAddButtonClick() }
+
+        if (intent != null && intent.hasExtra("coin_id")) {
+            // TODO
+        } else {
+            ui_ll_content.visibility = View.INVISIBLE
+            ui_pb_loading.visibility = View.VISIBLE
+            // TODO add a fake view
+            disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .doOnError { t : Throwable -> onCountryLoadError(t) }
+                    .doOnSuccess { countries : List<Country> ->
+                        sortCountriesByLocaleName(countries)
+                        onCountryLoaded(countries)
+                    }
+                    .subscribe())
+        }
+
     }
 
     private fun onAddButtonClick() {
@@ -103,26 +121,6 @@ class CoinAddActivity : AppCompatActivity() {
         ui_ll_coin_picture.visibility = View.VISIBLE
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (intent != null && intent.hasExtra("coin_id")) {
-            // TODO
-        } else {
-            ui_ll_content.visibility = View.INVISIBLE
-            ui_pb_loading.visibility = View.VISIBLE
-            // TODO add a fake view
-            disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .doOnError { t : Throwable -> onCountryLoadError(t) }
-                    .doOnSuccess { countries : List<Country> ->
-                        sortCountriesByLocaleName(countries)
-                        onCountryLoaded(countries)
-                    }
-                    .subscribe())
-        }
-    }
-
     private fun sortCountriesByLocaleName(countries : List<Country>) {
         countries.forEach { country -> country.localeName = Locale("", country.code).getDisplayCountry() }
         Collections.sort(countries, object : Comparator<Country> {
@@ -156,9 +154,9 @@ class CoinAddActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
         disposableList.forEach { disposable -> if (!disposable.isDisposed()) disposable.dispose() }
-        super.onStop()
+        super.onDestroy()
     }
 
     internal class CountrySpinnerAdapter(context :Context, resourceId : Int, countryList : List<Country>)
