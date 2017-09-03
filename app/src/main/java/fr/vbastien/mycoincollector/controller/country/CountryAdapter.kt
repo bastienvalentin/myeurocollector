@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import fr.vbastien.mycoincollector.R
-import fr.vbastien.mycoincollector.business.CountryBusiness
 import fr.vbastien.mycoincollector.db.Country
 import java.util.*
 
