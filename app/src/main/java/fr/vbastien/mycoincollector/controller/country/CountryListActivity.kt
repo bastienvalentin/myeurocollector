@@ -15,7 +15,7 @@ import fr.vbastien.mycoincollector.db.Country
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_country.*
+import kotlinx.android.synthetic.main.activity_list_country.*
 
 class CountryListActivity : LifecycleActivity() {
 
