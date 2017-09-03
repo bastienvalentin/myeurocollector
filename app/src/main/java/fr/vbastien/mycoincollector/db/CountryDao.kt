@@ -26,7 +26,7 @@ import io.reactivex.Single
 @Dao
 interface CountryDao {
 
-    @Query("SELECT Country.* FROM Country JOIN Coin ON Coin.country_id = Country.country_id")
+    @Query("SELECT Country.* FROM Country JOIN Coin ON Coin.country_id = Country.country_id GROUP BY Country.country_id")
     fun findCountriesWithCoin() : Maybe<List<Country>>
 
     @Query("SELECT Country.* FROM Country")
