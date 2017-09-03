@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import com.google.firebase.database.*
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.business.CountryBusiness
-import fr.vbastien.mycoincollector.controller.country.CountryActivity
+import fr.vbastien.mycoincollector.controller.country.CountryListActivity
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Country
 import io.reactivex.Completable
@@ -110,7 +110,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun startApplication() {
-        val i : Intent = Intent(this, CountryActivity::class.java)
+        val i : Intent = Intent(this, CountryListActivity::class.java)
         startActivity(i)
         finish()
     }
