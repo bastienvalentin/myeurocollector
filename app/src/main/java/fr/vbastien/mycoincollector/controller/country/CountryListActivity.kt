@@ -17,7 +17,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_country.*
 
-class CountryActivity : LifecycleActivity() {
+class CountryListActivity : LifecycleActivity() {
 
     private var disposableList : MutableList<Disposable> = mutableListOf()
 
@@ -36,7 +36,7 @@ class CountryActivity : LifecycleActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_country)
+        setContentView(R.layout.activity_list_country)
         setActionBar(ui_toolbar)
 
         loadCountries()

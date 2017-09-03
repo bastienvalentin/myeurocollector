@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".controller.country.CountryActivity"
+            android:name=".controller.country.CountryListActivity"
             android:label="@string/country_label"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".controller.splashscreen.SplashScreenActivity"
