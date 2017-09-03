@@ -25,8 +25,8 @@ import io.reactivex.Maybe
 @Dao
 interface CoinDao {
 
-    @Query("SELECT Coin.* FROM Coin")
-    fun findCoins() : Maybe<List<Coin>>
+    @Query("SELECT Coin.* FROM Coin JOIN Country ON Coin.country_id = Country.country_id WHERE Country.country_id = :arg0")
+    fun findCoinsForCountry(countryId : String) : Maybe<List<Coin>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoin(coin : Coin)
