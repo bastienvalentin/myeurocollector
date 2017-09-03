@@ -52,7 +52,7 @@ class CoinAddActivity : AppCompatActivity() {
         setContentView(R.layout.activity_coin_add)
         setActionBar(ui_toolbar)
 
-        ui_ll_coin_picture.setOnClickListener {
+        val pictureTakingListener = { v : View ->
             CropImage.activity(null)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setCropShape(CropImageView.CropShape.RECTANGLE)
@@ -61,7 +61,10 @@ class CoinAddActivity : AppCompatActivity() {
                     .setFixAspectRatio(true)
                     .setAspectRatio(1, 1)
                     .start(this);
-        }
+        };
+
+        ui_ll_coin_picture.setOnClickListener(pictureTakingListener)
+        ui_iv_coin_picture.setOnClickListener(pictureTakingListener)
 
         ui_bt_add_coin.setOnClickListener { onAddButtonClick() }
 
