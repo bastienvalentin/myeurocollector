@@ -55,7 +55,7 @@ dependencies {
     compile 'com.google.firebase:firebase-database:11.0.4'
     compile 'com.afollestad.material-dialogs:core:0.9.4.7'
 
-    compile 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.4.7'
 }
 repositories {
     mavenCentral()
