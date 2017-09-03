@@ -2,12 +2,14 @@
     <string name="app_name">MyCoinCollector</string>
     <string name="add_coin_label">Ajouter une pièce</string>
     <string name="country_label">Liste des pays</string>
+    <string name="coin_label">Liste des pièces</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
     <string name="unknown_country">Pays inconnu</string>
     <string name="france">France</string>
     <string name="germany">Allemagne</string>
 
+    <string name="coin_loading">Chargement des pièces</string>
     <string name="country_loading">Chargement des pays</string>
     <string name="no_coin_explanation">Aucune pièce n\'est disponible dans la base de donnée</string>
     <string name="add_coin_text">Ajouter une pièce</string>
@@ -39,4 +41,6 @@
     <string name="coin_added">Pièce ajoutée</string>
     <string name="coin_addition_error">Impossible d\'ajouter la pièce</string>
 
+    <string name="country_view_error">Impossible d\'afficher les pièces du pays</string>
+    <string name="coin_view_error">Impossible d\'afficher la pièce</string>
 </resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ui_cl_container"
+    tools:context="fr.vbastien.mycoincollector.controller.country.CountryListActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <Toolbar
+            android:id="@+id/ui_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:theme="@style/AppTheme.ToolBarStyle" />
+        <!--        <android.support.v7.widget.Toolbar
+                    android:id="@+id/ui_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:theme="@style/AppTheme.ToolBarStyle" /> -->
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/ui_fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ui_rv_coinlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+        <TextView
+            android:id="@+id/ui_tv_country_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/coin_loading"
+            android:layout_marginLeft="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginRight="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginStart="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginEnd="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+            android:layout_marginBottom="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+            android:layout_marginTop="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+            />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -10,8 +10,10 @@ import android.view.View
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.RequestCodes
 import fr.vbastien.mycoincollector.controller.coin.CoinAddActivity
+import fr.vbastien.mycoincollector.controller.coin.CoinListActivity
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Country
+import fr.vbastien.mycoincollector.util.ItemClickSupport
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -42,6 +44,17 @@ class CountryListActivity : LifecycleActivity() {
         loadCountries()
         countryAdapter = CountryAdapter(this, countryList)
         ui_rv_countrylist.adapter = countryAdapter
+
+        ItemClickSupport.addTo(ui_rv_countrylist).setOnItemClickListener { parent, view, position, id ->
+            val country = countryAdapter!!.getItemAt(position)
+            if (country == null) {
+                Snackbar.make(ui_cl_container, R.string.country_view_error, Snackbar.LENGTH_LONG).show()
+                return@setOnItemClickListener
+            }
+            val intent = Intent(this, CoinListActivity::class.java)
+            intent.putExtra("country_id", country.countryId)
+            startActivity(intent)
+        }
 
         countryAdapter?.notifyDataSetChanged()
 
