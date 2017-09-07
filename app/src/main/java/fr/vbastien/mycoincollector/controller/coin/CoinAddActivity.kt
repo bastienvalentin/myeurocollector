@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,23 +69,39 @@ class CoinAddActivity : AppCompatActivity() {
 
         ui_bt_add_coin.setOnClickListener { onAddButtonClick() }
 
-        if (intent != null && intent.hasExtra("coin_id")) {
-            // TODO
+        if (savedInstanceState != null) {
+            if (imageUri == null && !TextUtils.isEmpty(savedInstanceState.getString("imageUri"))) {
+                imageUri = Uri.parse(savedInstanceState.getString("imageUri"));
+            }
         } else {
-            ui_ll_content.visibility = View.INVISIBLE
-            ui_pb_loading.visibility = View.VISIBLE
-            // TODO add a fake view
-            disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .doOnError { t : Throwable -> onCountryLoadError(t) }
-                    .doOnSuccess { countries : List<Country> ->
-                        sortCountriesByLocaleName(countries)
-                        onCountryLoaded(countries)
-                    }
-                    .subscribe())
-        }
 
+            if (intent != null && intent.hasExtra("coin_id")) {
+                // TODO
+            } else {
+                ui_ll_content.visibility = View.INVISIBLE
+                ui_pb_loading.visibility = View.VISIBLE
+                // TODO add a fake view
+                disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .doOnError { t: Throwable -> onCountryLoadError(t) }
+                        .doOnSuccess { countries: List<Country> ->
+                            sortCountriesByLocaleName(countries)
+                            onCountryLoaded(countries)
+                        }
+                        .subscribe())
+            }
+        }
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        if (imageUri != null) {
+            displayImage(imageUri)
+        } else {
+            ui_iv_coin_picture.visibility = View.GONE
+            ui_ll_coin_picture.visibility = View.VISIBLE
+        }
     }
 
     private fun onAddButtonClick() {
@@ -220,19 +237,29 @@ class CoinAddActivity : AppCompatActivity() {
         }
     }
 
+    private fun displayImage(uri : Uri?) {
+        if (uri == null) return
+        ui_iv_coin_picture.setImageURI(uri)
+        ui_ll_coin_picture.visibility = View.GONE
+        ui_iv_coin_picture.visibility = View.VISIBLE
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 imageUri = result.uri
-                ui_iv_coin_picture.setImageURI(result.uri)
-                ui_ll_coin_picture.visibility = View.GONE
-                ui_iv_coin_picture.visibility = View.VISIBLE
+                displayImage(imageUri)
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Snackbar.make(ui_cl_cointainer, R.string.edit_picture_failed, Snackbar.LENGTH_LONG).show();
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putString("imageUri", imageUri?.toString());
+        super.onSaveInstanceState(outState)
     }
 }
