@@ -34,8 +34,8 @@ import kotlin.Comparator
 class CoinAddActivity : AppCompatActivity() {
 
     private var countryList : List<Country> = mutableListOf()
-    private var countryAdapter : CountrySpinnerAdapter? = null
     private var imageUri : Uri? = null
+    private var countryId : Int = 0
 
     fun onCountryLoaded(countries: List<Country>) {
         this.countryList = countries
@@ -73,24 +73,24 @@ class CoinAddActivity : AppCompatActivity() {
             if (imageUri == null && !TextUtils.isEmpty(savedInstanceState.getString("imageUri"))) {
                 imageUri = Uri.parse(savedInstanceState.getString("imageUri"));
             }
-        } else {
+            countryId = savedInstanceState.getInt("countryId", 0)
+        }
 
-            if (intent != null && intent.hasExtra("coin_id")) {
-                // TODO
-            } else {
-                ui_ll_content.visibility = View.INVISIBLE
-                ui_pb_loading.visibility = View.VISIBLE
-                // TODO add a fake view
-                disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .doOnError { t: Throwable -> onCountryLoadError(t) }
-                        .doOnSuccess { countries: List<Country> ->
-                            sortCountriesByLocaleName(countries)
-                            onCountryLoaded(countries)
-                        }
-                        .subscribe())
-            }
+        if (intent != null && intent.hasExtra("coin_id")) {
+            // TODO
+        } else {
+            ui_ll_content.visibility = View.INVISIBLE
+            ui_pb_loading.visibility = View.VISIBLE
+            // TODO add a fake view
+            disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .doOnError { t: Throwable -> onCountryLoadError(t) }
+                    .doOnSuccess { countries: List<Country> ->
+                        sortCountriesByLocaleName(countries)
+                        onCountryLoaded(countries)
+                    }
+                    .subscribe())
         }
     }
 
@@ -159,10 +159,12 @@ class CoinAddActivity : AppCompatActivity() {
     private fun initView() {
         ui_ll_content.visibility = View.VISIBLE
         ui_pb_loading.visibility = View.GONE
-        countryAdapter = CountrySpinnerAdapter(this, R.layout.item_country_list, countryList)
+        val countryAdapter = CountrySpinnerAdapter(this, R.layout.item_country_list, countryList)
         ui_sp_country.adapter = countryAdapter
 
-        countryAdapter!!.notifyDataSetChanged()
+        countryAdapter.notifyDataSetChanged()
+
+        ui_sp_country.setSelection(findIndexOfCountryWithId(countryId, countryAdapter))
 
         ui_sp_country.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -184,10 +186,12 @@ class CoinAddActivity : AppCompatActivity() {
 
         var layoutInflater : LayoutInflater
         var resourceId : Int
+        var countryList : List<Country>
 
         init {
             this.layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             this.resourceId = resourceId
+            this.countryList = countryList
         }
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             return fillView(position, convertView, parent)
@@ -246,13 +250,13 @@ class CoinAddActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data);
+            val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
                 imageUri = result.uri
                 displayImage(imageUri)
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Snackbar.make(ui_cl_cointainer, R.string.edit_picture_failed, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(ui_cl_cointainer, R.string.edit_picture_failed, Snackbar.LENGTH_LONG).show()
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -260,6 +264,16 @@ class CoinAddActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         outState?.putString("imageUri", imageUri?.toString());
+        outState?.putInt("countryId", (ui_sp_country.selectedItem as Country).countryId);
         super.onSaveInstanceState(outState)
+    }
+
+    private fun findIndexOfCountryWithId(countryId: Int, countryAdapter : CountrySpinnerAdapter) : Int {
+        var i = 0
+        countryAdapter.countryList.forEach { country ->
+            if (country.countryId == countryId) return i
+            i++
+        }
+        return 0
     }
 }
