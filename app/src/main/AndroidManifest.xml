@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.vbastien.mycoincollector">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".controller.MainApplication"
         android:allowBackup="true"
@@ -32,6 +34,10 @@
             android:theme="@style/CropperTheme" />
         <activity android:name=".controller.coin.CoinListActivity"
             android:label="@string/coin_label"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="dc651e5669c8a9ade6323b9c306f140fddf4c267"
+            />
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
+import com.crashlytics.android.Crashlytics
 
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.db.AppDatabase
@@ -51,6 +52,7 @@ class CoinListActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnError { t ->
+                    Crashlytics.logException(t)
                     t.printStackTrace()
                     Snackbar.make(ui_cl_container, R.string.country_view_error, Snackbar.LENGTH_LONG).show()
                     finish()

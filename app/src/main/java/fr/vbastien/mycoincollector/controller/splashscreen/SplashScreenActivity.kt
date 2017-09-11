@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import com.crashlytics.android.Crashlytics
 import com.google.firebase.database.*
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.business.CountryBusiness
@@ -27,10 +28,12 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     fun onCountryInsertError(error: Throwable) {
+        Crashlytics.logException(error)
         Snackbar.make(ui_cl_container, R.string.app_init_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry, { insertFallbackCountriesIntoDataSource() })
     }
 
     fun onCountryLoadError(error: Throwable) {
+        Crashlytics.logException(error)
         Snackbar.make(ui_cl_container, R.string.app_init_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry, { countCountryInDataSource() })
     }
 
@@ -59,6 +62,7 @@ class SplashScreenActivity : AppCompatActivity() {
                         startApplication()
                     }
                 } catch (e: Exception) {
+                    Crashlytics.logException(e)
                     e.printStackTrace()
                     insertFallbackCountriesIntoDataSource()
                 }
@@ -77,7 +81,10 @@ class SplashScreenActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete { onCountryInserted() }
-                .doOnError { t : Throwable -> onCountryInsertError(t) }
+                .doOnError { t : Throwable ->
+                    Crashlytics.logException(t)
+                    onCountryInsertError(t)
+                }
                 .subscribe())
     }
 
@@ -89,7 +96,10 @@ class SplashScreenActivity : AppCompatActivity() {
         disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().countCountries()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .doOnError { t: Throwable -> onCountryLoadError(t) }
+                .doOnError { t: Throwable ->
+                    Crashlytics.logException(t)
+                    onCountryLoadError(t)
+                }
                 .doOnSuccess { count : Int -> onCountryLoaded(count) }
                 .subscribe())
     }

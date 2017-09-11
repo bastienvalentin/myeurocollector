@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.crashlytics.android.Crashlytics
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.RequestCodes
 import fr.vbastien.mycoincollector.controller.coin.CoinAddActivity
@@ -30,6 +31,7 @@ class CountryListActivity : LifecycleActivity() {
     }
 
     fun onCountryLoadError(error: Throwable) {
+        Crashlytics.logException(error)
         Snackbar.make(ui_cl_container, R.string.loading_error, Snackbar.LENGTH_SHORT).show()
     }
 
@@ -75,7 +77,10 @@ class CountryListActivity : LifecycleActivity() {
         disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountriesWithCoin()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .doOnError { t: Throwable -> onCountryLoadError(t) }
+                .doOnError { t: Throwable ->
+                    Crashlytics.logException(t)
+                    onCountryLoadError(t)
+                }
                 .doOnSuccess { countries: List<Country> -> onCountryLoaded(countries) }
                 .subscribe())
     }

@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.crashlytics.android.Crashlytics
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 
@@ -43,7 +44,8 @@ class CoinAddActivity : AppCompatActivity() {
     }
 
     fun onCountryLoadError(error: Throwable) {
-        Snackbar.make(ui_cl_cointainer, R.string.loading_error, Snackbar.LENGTH_LONG);
+        Crashlytics.logException(error)
+        Snackbar.make(ui_cl_cointainer, R.string.loading_error, Snackbar.LENGTH_LONG)
     }
 
     private var disposableList : MutableList<Disposable> = mutableListOf()
@@ -61,8 +63,8 @@ class CoinAddActivity : AppCompatActivity() {
                     .setAllowCounterRotation(false)
                     .setFixAspectRatio(true)
                     .setAspectRatio(1, 1)
-                    .start(this);
-        };
+                    .start(this)
+        }
 
         ui_ll_coin_picture.setOnClickListener(pictureTakingListener)
         ui_iv_coin_picture.setOnClickListener(pictureTakingListener)
@@ -71,7 +73,7 @@ class CoinAddActivity : AppCompatActivity() {
 
         if (savedInstanceState != null) {
             if (imageUri == null && !TextUtils.isEmpty(savedInstanceState.getString("imageUri"))) {
-                imageUri = Uri.parse(savedInstanceState.getString("imageUri"));
+                imageUri = Uri.parse(savedInstanceState.getString("imageUri"))
             }
             countryId = savedInstanceState.getInt("countryId", 0)
         }
@@ -129,7 +131,11 @@ class CoinAddActivity : AppCompatActivity() {
                     Snackbar.make(ui_cl_cointainer, R.string.coin_added, Snackbar.LENGTH_SHORT).show()
                     resetFields()
                 }
-                .doOnError { t : Throwable -> Snackbar.make(ui_cl_cointainer, R.string.coin_addition_error, Snackbar.LENGTH_SHORT) }
+                .doOnError {
+                    t : Throwable ->
+                        Crashlytics.logException(t)
+                        Snackbar.make(ui_cl_cointainer, R.string.coin_addition_error, Snackbar.LENGTH_SHORT)
+                }
                 .subscribe())
     }
 
@@ -263,8 +269,8 @@ class CoinAddActivity : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putString("imageUri", imageUri?.toString());
-        outState?.putInt("countryId", (ui_sp_country.selectedItem as Country).countryId);
+        outState?.putString("imageUri", imageUri?.toString())
+        outState?.putInt("countryId", (ui_sp_country.selectedItem as Country).countryId)
         super.onSaveInstanceState(outState)
     }
 
