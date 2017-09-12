@@ -1,9 +1,6 @@
 package fr.vbastien.mycoincollector.business
 
-import android.content.Context
-import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.db.Country
-import fr.vbastien.mycoincollector.util.StringUtil
 
 /**
  * Created by vbastien on 10/08/2017.
