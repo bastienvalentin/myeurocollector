@@ -25,6 +25,8 @@ class CoinListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_list_coin)
         setActionBar(ui_toolbar)
 
+        actionBar.setDisplayHomeAsUpEnabled(true)
+
         if (actionBar != null) actionBar.setDisplayShowHomeEnabled(true)
 
         if (savedInstanceState != null) {
