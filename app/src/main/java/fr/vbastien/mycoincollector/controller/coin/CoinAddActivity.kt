@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -54,6 +55,8 @@ class CoinAddActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coin_add)
         setActionBar(ui_toolbar)
+
+        actionBar.setDisplayHomeAsUpEnabled(true)
 
         val pictureTakingListener = { v : View ->
             CropImage.activity(null)
@@ -281,5 +284,12 @@ class CoinAddActivity : AppCompatActivity() {
             i++
         }
         return 0
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
