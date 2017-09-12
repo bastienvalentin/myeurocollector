@@ -43,4 +43,8 @@
 
     <string name="country_view_error">Impossible d\'afficher les pièces du pays</string>
     <string name="coin_view_error">Impossible d\'afficher la pièce</string>
+    <string name="abort_edition_dialog_title">Abandon des modifications</string>
+    <string name="abort_edition_dialog_content">Si vous abandonnez les données saisies seront perdues.</string>
+    <string name="erase">Effacer</string>
+    <string name="continue_typing">Continuer la saisie</string>
 </resources>

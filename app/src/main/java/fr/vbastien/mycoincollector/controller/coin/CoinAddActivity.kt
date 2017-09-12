@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.afollestad.materialdialogs.MaterialDialog
 import com.crashlytics.android.Crashlytics
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -286,9 +287,38 @@ class CoinAddActivity : AppCompatActivity() {
         return 0
     }
 
+    private fun hasEdittedValue() : Boolean {
+        return (!TextUtils.isEmpty(ui_et_coin_description.text)
+                || !TextUtils.isEmpty(ui_et_coin_value.text)
+                || imageUri != null)
+    }
+
+    private fun askExitConfirmation() {
+        MaterialDialog.Builder(this)
+                .title(R.string.abort_edition_dialog_title)
+                .content(R.string.abort_edition_dialog_content)
+                .positiveText(R.string.erase)
+                .negativeText(R.string.continue_typing)
+                .autoDismiss(true)
+                .onPositive { dialog, which -> finish() }
+                .show()
+    }
+
+    private fun exitWithConfirmation() {
+        if (hasEdittedValue()) {
+            askExitConfirmation()
+        } else {
+            finish()
+        }
+    }
+
+    override fun onBackPressed() {
+        exitWithConfirmation()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == android.R.id.home) {
-            finish()
+            exitWithConfirmation()
         }
         return super.onOptionsItemSelected(item)
     }
