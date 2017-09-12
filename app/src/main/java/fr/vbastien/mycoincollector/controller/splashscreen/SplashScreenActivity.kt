@@ -2,6 +2,7 @@ package fr.vbastien.mycoincollector.controller.splashscreen
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import com.crashlytics.android.Crashlytics
@@ -22,6 +23,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private var disposableList : MutableList<Disposable> = mutableListOf()
     private var countryCount = 0;
+    private var timeOutHandler : Handler? = null
+    private var timeOutRunnable : Runnable? = null
 
     fun onCountryInserted() {
         startApplication()
@@ -112,16 +115,31 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         countCountryInDataSource()
+        startTimeOutTimer()
     }
 
     override fun onStop() {
         super.onStop()
         disposableList.forEach { disposable -> if (!disposable.isDisposed) disposable.dispose() }
+        if (timeOutRunnable != null) {
+            timeOutHandler?.removeCallbacks(timeOutRunnable)
+        }
     }
 
     private fun startApplication() {
         val i : Intent = Intent(this, CountryListActivity::class.java)
         startActivity(i)
         finish()
+    }
+
+    private fun startTimeOutTimer() {
+        try {
+            timeOutHandler = Handler()
+            timeOutRunnable = Runnable { startApplication() }
+            timeOutHandler!!.postDelayed(timeOutRunnable, 2000)
+        } catch (e : Exception) {
+            Crashlytics.logException(e)
+            e.printStackTrace()
+        }
     }
 }
