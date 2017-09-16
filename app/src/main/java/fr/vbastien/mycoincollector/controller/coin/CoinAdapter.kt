@@ -40,7 +40,13 @@ class CoinAdapter(var context: Context, var coinList: List<Coin>) : RecyclerView
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         val coin = getItemAt(position) ?: return
 
-        holder?.coinDesc?.text = coin.description
+        if (TextUtils.isEmpty(coin.description)) {
+            holder?.coinDesc?.visibility = View.GONE
+        } else {
+            holder?.coinDesc?.text = coin.description
+            holder?.coinDesc?.visibility = View.VISIBLE
+        }
+
         holder?.coinValue?.text = coin.value.toString()
         if (TextUtils.isEmpty(coin.img)) {
             holder?.coinPicture?.setImageResource(R.drawable.coin_empty)
