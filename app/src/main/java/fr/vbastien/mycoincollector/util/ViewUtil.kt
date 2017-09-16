@@ -7,7 +7,7 @@ import android.content.Context
  */
 class ViewUtil {
     companion object {
-        public fun dpToPx(context: Context, dp : Int) : Int {
+        fun dpToPx(context: Context, dp : Int) : Int {
             return (context.resources.displayMetrics.density * dp + 0.5f).toInt()
         }
     }
