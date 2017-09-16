@@ -43,7 +43,6 @@ class CountryListActivity : LifecycleActivity() {
         setContentView(R.layout.activity_list_country)
         setActionBar(ui_toolbar)
 
-        loadCountries()
         countryAdapter = CountryAdapter(this, countryList)
         ui_rv_countrylist.adapter = countryAdapter
 
@@ -62,6 +61,11 @@ class CountryListActivity : LifecycleActivity() {
 
         ui_fab_add_coin.setOnClickListener { loadAddCoinCountry() }
         ui_bt_add_coin.setOnClickListener { loadAddCoinCountry() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadCountries()
     }
 
     fun loadAddCoinCountry() {
