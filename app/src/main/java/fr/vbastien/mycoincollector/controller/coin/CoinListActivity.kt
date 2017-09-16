@@ -3,6 +3,7 @@ package fr.vbastien.mycoincollector.controller.coin
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
@@ -40,6 +41,8 @@ class CoinListActivity : AppCompatActivity() {
             Snackbar.make(ui_cl_container, R.string.country_view_error, Snackbar.LENGTH_LONG).show()
             finish()
         }
+
+        ui_rv_coinlist.layoutManager = GridLayoutManager(this, 2)
 
         ItemClickSupport.addTo(ui_rv_coinlist).setOnItemClickListener { parent, view, position, id ->
             val coin = coinAdapter?.getItemAt(position)
