@@ -1,13 +1,14 @@
 package fr.vbastien.mycoincollector.util
 
 import android.content.Context
+import android.support.v7.widget.AppCompatImageView
 import android.util.AttributeSet
 import android.widget.ImageView
 
 /**
  * Created by vbastien on 28/08/2017.
  */
-class SquareImageView : ImageView {
+class SquareImageView : AppCompatImageView {
 
     constructor(context : Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

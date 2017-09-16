@@ -2,8 +2,10 @@ package fr.vbastien.mycoincollector.controller.coin
 
 import android.support.v7.widget.RecyclerView
 import android.content.Context
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.AppCompatImageView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.widget.TextView
@@ -41,14 +43,14 @@ class CoinAdapter(var context: Context, var coinList: List<Coin>) : RecyclerView
         holder?.coinValue?.text = coin.value.toString()
         if (TextUtils.isEmpty(coin.img)) {
             holder?.coinPicture?.setImageResource(R.drawable.coin_empty)
-            holder?.coinPicture?.setColorFilter(ContextCompat.getColor(context, R.color.material_grey_400), android.graphics.PorterDuff.Mode.MULTIPLY);
+            holder?.coinPicture?.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_grey_400))
         } else {
             holder?.coinPicture?.setImageURI(Uri.parse(coin.img))
         }
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        var coinPicture = v.findViewById<SquareImageView>(R.id.ui_iv_coin_picture)
+        var coinPicture = v.findViewById<AppCompatImageView>(R.id.ui_iv_coin_picture)
         var coinDesc = v.findViewById<TextView>(R.id.ui_tv_coin_desc)
         var coinValue = v.findViewById<TextView>(R.id.ui_tv_coin_value)
     }
