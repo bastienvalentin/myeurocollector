@@ -126,7 +126,11 @@ class CoinAddActivity : AppCompatActivity() {
         coin.countryId = selectedCountry.countryId
         coin.value = coinValue
         coin.description = description
-        coin.img = imageUri.toString()
+        if (imageUri != null) {
+            coin.img = imageUri.toString()
+        } else {
+            coin.img = null
+        }
 
         disposableList.add(Completable.fromAction { AppDatabase.getInMemoryDatabase(this).coinModel().insertCoin(coin) }
                 .subscribeOn(Schedulers.io())
