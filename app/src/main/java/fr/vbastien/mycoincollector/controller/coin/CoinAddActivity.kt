@@ -153,6 +153,7 @@ class CoinAddActivity : AppCompatActivity() {
         ui_et_coin_description.setText("")
         ui_iv_coin_picture.visibility = View.GONE
         ui_ll_coin_picture.visibility = View.VISIBLE
+        imageUri = null
     }
 
     private fun sortCountriesByLocaleName(countries : List<Country>) {
