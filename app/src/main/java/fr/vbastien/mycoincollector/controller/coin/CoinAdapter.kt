@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.db.Coin
 import fr.vbastien.mycoincollector.util.SquareImageView
+import fr.vbastien.mycoincollector.util.ViewUtil
 
 
 /**
@@ -44,8 +45,11 @@ class CoinAdapter(var context: Context, var coinList: List<Coin>) : RecyclerView
         if (TextUtils.isEmpty(coin.img)) {
             holder?.coinPicture?.setImageResource(R.drawable.coin_empty)
             holder?.coinPicture?.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_grey_400))
+            val padding = ViewUtil.dpToPx(context, 8)
+            holder?.coinPicture?.setPadding(padding, padding, padding, padding)
         } else {
             holder?.coinPicture?.setImageURI(Uri.parse(coin.img))
+            holder?.coinPicture?.setPadding(0, 0, 0, 0)
         }
     }
 
