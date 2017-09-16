@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
@@ -42,7 +43,7 @@ class CoinListActivity : AppCompatActivity() {
             finish()
         }
 
-        ui_rv_coinlist.layoutManager = GridLayoutManager(this, 2)
+        ui_rv_coinlist.layoutManager = StaggeredGridLayoutManager(2, 1)
 
         ItemClickSupport.addTo(ui_rv_coinlist).setOnItemClickListener { parent, view, position, id ->
             val coin = coinAdapter?.getItemAt(position)
