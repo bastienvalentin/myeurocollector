@@ -52,7 +52,7 @@ class CoinAdapter(var context: Context, var coinList: List<Coin>) : RecyclerView
         if (TextUtils.isEmpty(coin.img)) {
             holder?.coinPicture?.setImageResource(R.drawable.coin_empty)
             holder?.coinPicture?.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.material_grey_400))
-            val padding = ViewUtil.dpToPx(context, 8)
+            val padding = ViewUtil.dpToPx(context, 32)
             holder?.coinPicture?.setPadding(padding, padding, padding, padding)
         } else {
             Picasso.with(context).load(Uri.parse(coin.img)).resize(500, 500).centerInside().into(holder?.coinPicture)
