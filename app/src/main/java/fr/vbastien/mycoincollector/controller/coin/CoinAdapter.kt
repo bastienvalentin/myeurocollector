@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.db.Coin
 import fr.vbastien.mycoincollector.util.SquareImageView
@@ -54,7 +55,7 @@ class CoinAdapter(var context: Context, var coinList: List<Coin>) : RecyclerView
             val padding = ViewUtil.dpToPx(context, 8)
             holder?.coinPicture?.setPadding(padding, padding, padding, padding)
         } else {
-            holder?.coinPicture?.setImageURI(Uri.parse(coin.img))
+            Picasso.with(context).load(Uri.parse(coin.img)).resize(500, 500).centerInside().into(holder?.coinPicture)
             holder?.coinPicture?.setPadding(0, 0, 0, 0)
         }
     }
