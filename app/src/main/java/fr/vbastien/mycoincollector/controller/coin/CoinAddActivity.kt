@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.crashlytics.android.Crashlytics
+import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 
@@ -258,7 +259,7 @@ class CoinAddActivity : AppCompatActivity() {
 
     private fun displayImage(uri : Uri?) {
         if (uri == null) return
-        ui_iv_coin_picture.setImageURI(uri)
+        Picasso.with(this).load(uri).resize(1024, 1024).centerInside().into(ui_iv_coin_picture)
         ui_ll_coin_picture.visibility = View.GONE
         ui_iv_coin_picture.visibility = View.VISIBLE
     }
