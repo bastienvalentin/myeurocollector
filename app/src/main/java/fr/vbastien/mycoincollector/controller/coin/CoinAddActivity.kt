@@ -33,7 +33,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_coin_add.*
 import java.text.Normalizer
 import java.util.*
-import kotlin.Comparator
 
 class CoinAddActivity : AppCompatActivity() {
 
@@ -60,7 +59,7 @@ class CoinAddActivity : AppCompatActivity() {
 
         actionBar.setDisplayHomeAsUpEnabled(true)
 
-        val pictureTakingListener = { v : View ->
+        val pictureTakingListener = { _ : View ->
             CropImage.activity(null)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setCropShape(CropImageView.CropShape.RECTANGLE)
@@ -158,18 +157,16 @@ class CoinAddActivity : AppCompatActivity() {
     }
 
     private fun sortCountriesByLocaleName(countries : List<Country>) {
-        countries.forEach { country -> country.localeName = Locale("", country.code).getDisplayCountry() }
-        Collections.sort(countries, object : Comparator<Country> {
-            override fun compare(p0: Country, p1: Country): Int {
-                val p0localNameStripped = Normalizer.normalize(p0.localeName, Normalizer.Form.NFD)
-                p0localNameStripped.replace("[^\\p{ASCII}]", "")
+        countries.forEach { country -> country.localeName = Locale("", country.code).displayCountry }
+        Collections.sort(countries) { p0, p1 ->
+            val p0localNameStripped = Normalizer.normalize(p0.localeName, Normalizer.Form.NFD)
+            p0localNameStripped.replace("[^\\p{ASCII}]", "")
 
-                val p1localNameStripped = Normalizer.normalize(p1.localeName, Normalizer.Form.NFD)
-                p1localNameStripped.replace("[^\\p{ASCII}]", "")
+            val p1localNameStripped = Normalizer.normalize(p1.localeName, Normalizer.Form.NFD)
+            p1localNameStripped.replace("[^\\p{ASCII}]", "")
 
-                return p0localNameStripped.compareTo(p1localNameStripped)
-            }
-        })
+            p0localNameStripped.compareTo(p1localNameStripped)
+        }
     }
 
     private fun initView() {
@@ -193,27 +190,20 @@ class CoinAddActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        disposableList.forEach { disposable -> if (!disposable.isDisposed()) disposable.dispose() }
+        disposableList.forEach { disposable -> if (!disposable.isDisposed) disposable.dispose() }
         super.onDestroy()
     }
 
-    internal class CountrySpinnerAdapter(context :Context, resourceId : Int, countryList : List<Country>)
+    internal class CountrySpinnerAdapter(context :Context, var resourceId: Int, var countryList: List<Country>)
         : ArrayAdapter<Country>(context, resourceId, countryList) {
 
-        var layoutInflater : LayoutInflater
-        var resourceId : Int
-        var countryList : List<Country>
+        var layoutInflater : LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        init {
-            this.layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            this.resourceId = resourceId
-            this.countryList = countryList
-        }
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            return fillView(position, convertView, parent)
+            return fillView(position, convertView)
         }
 
-        fun fillView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        fun fillView(position: Int, convertView: View?): View {
             val holder: ViewHolder
             val convertViewLocal : View
 
@@ -223,7 +213,7 @@ class CoinAddActivity : AppCompatActivity() {
 
                 holder.countryName = convertViewLocal as TextView?
 
-                convertViewLocal.setTag(holder)//error in this line
+                convertViewLocal.tag = holder
 
             } else {
                 holder = convertView.tag as ViewHolder
@@ -232,7 +222,7 @@ class CoinAddActivity : AppCompatActivity() {
 
             val item = getItem(position)
 
-            holder.countryName?.text = Locale("", item?.code).getDisplayCountry()
+            holder.countryName?.text = Locale("", item?.code).displayCountry
 
             val countryFlagRes = FlagDrawableFactory.getFlagFor(item?.code)
             if (countryFlagRes != null) {
@@ -249,7 +239,7 @@ class CoinAddActivity : AppCompatActivity() {
         }
 
         override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            return fillView(position, convertView, parent)
+            return fillView(position, convertView)
         }
 
         internal class ViewHolder {
@@ -286,8 +276,8 @@ class CoinAddActivity : AppCompatActivity() {
 
     private fun findIndexOfCountryWithId(countryId: Int, countryAdapter : CountrySpinnerAdapter) : Int {
         var i = 0
-        countryAdapter.countryList.forEach { country ->
-            if (country.countryId == countryId) return i
+        countryAdapter.countryList.forEach { (countryId1) ->
+            if (countryId1 == countryId) return i
             i++
         }
         return 0
@@ -306,7 +296,7 @@ class CoinAddActivity : AppCompatActivity() {
                 .positiveText(R.string.erase)
                 .negativeText(R.string.continue_typing)
                 .autoDismiss(true)
-                .onPositive { dialog, which -> finish() }
+                .onPositive { _, _ -> finish() }
                 .show()
     }
 
