@@ -1,5 +1,6 @@
 package fr.vbastien.mycoincollector.controller.coin
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -11,6 +12,7 @@ import android.view.View
 import com.crashlytics.android.Crashlytics
 
 import fr.vbastien.mycoincollector.R
+import fr.vbastien.mycoincollector.RequestCodes
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.util.ItemClickSupport
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -73,6 +75,8 @@ class CoinListActivity : AppCompatActivity() {
                     ui_rv_coinlist.adapter = coinAdapter
                 }
                 .subscribe()
+
+        ui_fab_add_coin.setOnClickListener({ _ -> loadAddCoinCountry() })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -86,5 +90,11 @@ class CoinListActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putInt("country_id", countryId!!)
+    }
+
+    fun loadAddCoinCountry() {
+        val i : Intent = Intent(this, CoinAddActivity::class.java)
+        i.putExtra("country_id", countryId!!)
+        startActivityForResult(i, RequestCodes.ADD_COIN_REQUEST_CODE)
     }
 }
