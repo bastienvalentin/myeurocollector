@@ -59,7 +59,7 @@ class CoinAddActivity : AppCompatActivity() {
 
         actionBar.setDisplayHomeAsUpEnabled(true)
 
-        val pictureTakingListener = { _ : View ->
+        val pictureTakingListener = { _: View ->
             CropImage.activity(null)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setCropShape(CropImageView.CropShape.RECTANGLE)
@@ -80,24 +80,27 @@ class CoinAddActivity : AppCompatActivity() {
                 imageUri = Uri.parse(savedInstanceState.getString("imageUri"))
             }
             countryId = savedInstanceState.getInt("countryId", 0)
-        }
-
-        if (intent != null && intent.hasExtra("coin_id")) {
-            // TODO
         } else {
-            ui_ll_content.visibility = View.INVISIBLE
-            ui_pb_loading.visibility = View.VISIBLE
-            // TODO add a fake view
-            disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .doOnError { t: Throwable -> onCountryLoadError(t) }
-                    .doOnSuccess { countries: List<Country> ->
-                        sortCountriesByLocaleName(countries)
-                        onCountryLoaded(countries)
-                    }
-                    .subscribe())
+
+            if (intent != null && intent.hasExtra("coin_id")) {
+                // TODO
+            } else if (intent != null && intent.hasExtra("country_id")) {
+                countryId = intent.getIntExtra("country_id", 0);
+            } else {
+                // TODO add a fake view
+            }
         }
+        ui_ll_content.visibility = View.INVISIBLE
+        ui_pb_loading.visibility = View.VISIBLE
+        disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .doOnError { t: Throwable -> onCountryLoadError(t) }
+                .doOnSuccess { countries: List<Country> ->
+                    sortCountriesByLocaleName(countries)
+                    onCountryLoaded(countries)
+                }
+                .subscribe())
     }
 
     override fun onPostResume() {
