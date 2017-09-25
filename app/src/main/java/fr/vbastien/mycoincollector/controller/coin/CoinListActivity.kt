@@ -52,7 +52,7 @@ class CoinListActivity : AppCompatActivity() {
             if (coin == null) {
                 Snackbar.make(ui_cl_container, R.string.coin_view_error, Snackbar.LENGTH_LONG).show()
             } else {
-                //TODO
+                loadAddCoinCountry(coin.coinId)
             }
         }
 
@@ -76,7 +76,7 @@ class CoinListActivity : AppCompatActivity() {
                 }
                 .subscribe()
 
-        ui_fab_add_coin.setOnClickListener({ _ -> loadAddCoinCountry() })
+        ui_fab_add_coin.setOnClickListener({ _ -> loadAddCoinCountry(null) })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -92,9 +92,13 @@ class CoinListActivity : AppCompatActivity() {
         outState?.putInt("country_id", countryId!!)
     }
 
-    fun loadAddCoinCountry() {
+    fun loadAddCoinCountry(coinId: Int?) {
         val i : Intent = Intent(this, CoinAddActivity::class.java)
-        i.putExtra("country_id", countryId!!)
+        if (coinId != null) {
+            i.putExtra("coin_id", coinId)
+        } else {
+            i.putExtra("country_id", countryId!!)
+        }
         startActivityForResult(i, RequestCodes.ADD_COIN_REQUEST_CODE)
     }
 }

@@ -31,4 +31,7 @@ interface CoinDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCoin(coin : Coin)
 
+    @Query("SELECT Coin.* FROM Coin WHERE Coin.coin_id = :arg0")
+    fun findCoinWithId(coinId : String) : Maybe<Coin>
+
 }
