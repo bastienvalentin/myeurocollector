@@ -39,7 +39,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ui_rv_coinlist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/ui_tv_country_placeholder"

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.TextUtils
 import android.view.MenuItem
@@ -45,7 +46,9 @@ class CoinListActivity : AppCompatActivity() {
             finish()
         }
 
-        ui_rv_coinlist.layoutManager = StaggeredGridLayoutManager(2, 1)
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+        ui_rv_coinlist.layoutManager = layoutManager
 
         ItemClickSupport.addTo(ui_rv_coinlist).setOnItemClickListener { parent, view, position, id ->
             val coin = coinAdapter?.getItemAt(position)
@@ -56,6 +59,14 @@ class CoinListActivity : AppCompatActivity() {
             }
         }
 
+        ui_fab_add_coin.setOnClickListener({ _ -> loadAddCoinCountry(null) })
+
+        coinAdapter = CoinAdapter(this, mutableListOf())
+        ui_rv_coinlist.adapter = coinAdapter
+    }
+
+    override fun onStart() {
+        super.onStart()
         AppDatabase.getInMemoryDatabase(this).coinModel().findCoinsForCountry(countryId.toString())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -71,12 +82,11 @@ class CoinListActivity : AppCompatActivity() {
                         finish()
                     }
                     ui_tv_country_placeholder.visibility = View.GONE
-                    coinAdapter = CoinAdapter(this, coinList)
-                    ui_rv_coinlist.adapter = coinAdapter
+
+                    coinAdapter?.coinList = coinList
+                    coinAdapter?.notifyDataSetChanged()
                 }
                 .subscribe()
-
-        ui_fab_add_coin.setOnClickListener({ _ -> loadAddCoinCountry(null) })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
