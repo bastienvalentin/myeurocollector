@@ -33,12 +33,19 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:label="@string/edit_picture"
             android:theme="@style/CropperTheme" />
-        <activity android:name=".controller.coin.CoinListActivity"
-            android:label="@string/coin_label"/>
+        <activity
+            android:name=".controller.coin.CoinListActivity"
+            android:label="@string/coin_label" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="dc651e5669c8a9ade6323b9c306f140fddf4c267"
-            />
+            android:value="dc651e5669c8a9ade6323b9c306f140fddf4c267" />
+
+        <activity
+            android:name=".controller.coin.CoinDetailActivity"
+            android:label="@string/title_activity_coin_detail"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

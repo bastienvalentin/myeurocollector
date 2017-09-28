@@ -47,4 +47,5 @@
     <string name="abort_edition_dialog_content">Si vous abandonnez les données saisies seront perdues.</string>
     <string name="erase">Effacer</string>
     <string name="continue_typing">Continuer la saisie</string>
+    <string name="title_activity_coin_detail">Vue détaillée</string>
 </resources>
