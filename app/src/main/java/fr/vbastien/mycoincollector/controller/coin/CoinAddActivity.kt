@@ -43,6 +43,8 @@ class CoinAddActivity : AppCompatActivity() {
     private var coinId: Int = -1
     private var coin: Coin? = null
     private var savedInstance = false
+    private var disposableList : MutableList<Disposable> = mutableListOf()
+
 
     fun onCountryLoaded(countries: List<Country>) {
         this.countryList = countries
@@ -50,15 +52,14 @@ class CoinAddActivity : AppCompatActivity() {
             disposableList.add(AppDatabase.getInMemoryDatabase(this).coinModel().findCoinWithId(coinId.toString())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .doOnError { t: Throwable -> onCoinLoadError(t) }
-                    .doOnSuccess { coin: Coin ->
-                        this.coin = coin
+                    .subscribe({t1: Coin ->
+                        this.coin = t1
                         if (!savedInstance) {
-                            countryId = coin.countryId
-                            ui_et_coin_description.setText(coin.description)
-                            ui_et_coin_value.setText(coin.value.toString())
-                            if (!TextUtils.isEmpty(coin.img)) {
-                                imageUri = Uri.parse(coin.img)
+                            countryId = t1.countryId
+                            ui_et_coin_description.setText(t1.description)
+                            ui_et_coin_value.setText(t1.value.toString())
+                            if (!TextUtils.isEmpty(t1.img)) {
+                                imageUri = Uri.parse(t1.img)
                             }
                         }
                         if (imageUri != null) {
@@ -67,9 +68,7 @@ class CoinAddActivity : AppCompatActivity() {
                             ui_iv_coin_picture.visibility = View.GONE
                             ui_ll_coin_picture.visibility = View.VISIBLE
                         }
-                        initView()
-                    }
-                    .subscribe())
+                        initView()}, this::onCoinLoadError))
         } else {
             initView()
         }
@@ -86,7 +85,6 @@ class CoinAddActivity : AppCompatActivity() {
         finish()
     }
 
-    private var disposableList : MutableList<Disposable> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,14 +113,14 @@ class CoinAddActivity : AppCompatActivity() {
         ui_bt_add_coin.setOnClickListener { onAddButtonClick() }
 
         if (savedInstanceState != null) {
-            savedInstance = true;
+            savedInstance = true
             if (imageUri == null && !TextUtils.isEmpty(savedInstanceState.getString("imageUri"))) {
                 imageUri = Uri.parse(savedInstanceState.getString("imageUri"))
             }
             countryId = savedInstanceState.getInt("countryId", 0)
             coinId = savedInstanceState.getInt("coinId", -1)
         } else {
-            savedInstance = false;
+            savedInstance = false
 
             if (intent != null && intent.hasExtra("coin_id")) {
                 coinId = intent.getIntExtra("coin_id", -1)
