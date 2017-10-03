@@ -21,6 +21,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import io.reactivex.Maybe
+import io.reactivex.Single
 
 @Dao
 interface CoinDao {
@@ -32,6 +33,6 @@ interface CoinDao {
     fun insertCoin(coin : Coin)
 
     @Query("SELECT Coin.* FROM Coin WHERE Coin.coin_id = :arg0")
-    fun findCoinWithId(coinId : String) : Maybe<Coin>
+    fun findCoinWithId(coinId : String) : Single<Coin>
 
 }
