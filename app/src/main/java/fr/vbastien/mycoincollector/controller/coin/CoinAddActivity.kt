@@ -133,12 +133,14 @@ class CoinAddActivity : AppCompatActivity() {
         disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountries()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .doOnError { t: Throwable -> onCountryLoadError(t) }
-                .doOnSuccess { countries: List<Country> ->
-                    sortCountriesByLocaleName(countries)
-                    onCountryLoaded(countries)
-                }
-                .subscribe())
+                .subscribe(
+                        {
+                            countries: List<Country> ->
+                            sortCountriesByLocaleName(countries)
+                            onCountryLoaded(countries)
+                        },
+                        {t: Throwable -> onCountryLoadError(t)}
+                ))
     }
 
     override fun onPostResume() {

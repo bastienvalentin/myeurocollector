@@ -18,11 +18,10 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 
-
 class SplashScreenActivity : AppCompatActivity() {
 
     private var disposableList : MutableList<Disposable> = mutableListOf()
-    private var countryCount = 0;
+    private var countryCount = 0
     private var timeOutHandler : Handler? = null
     private var timeOutRunnable : Runnable? = null
 
@@ -99,12 +98,10 @@ class SplashScreenActivity : AppCompatActivity() {
         disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().countCountries()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .doOnError { t: Throwable ->
+                .subscribe(this::onCountryLoaded, { t: Throwable ->
                     Crashlytics.logException(t)
                     onCountryLoadError(t)
-                }
-                .doOnSuccess { count : Int -> onCountryLoaded(count) }
-                .subscribe())
+                }))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

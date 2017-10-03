@@ -81,12 +81,14 @@ class CountryListActivity : LifecycleActivity() {
         disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().findCountriesWithCoin()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .doOnError { t: Throwable ->
-                    Crashlytics.logException(t)
-                    onCountryLoadError(t)
-                }
-                .doOnSuccess { countries: List<Country> -> onCountryLoaded(countries) }
-                .subscribe())
+                .subscribe(
+                        {countries: List<Country> -> onCountryLoaded(countries)},
+                        {
+                            t: Throwable ->
+                            Crashlytics.logException(t)
+                            onCountryLoadError(t)
+                        }
+                ))
     }
 
     fun showCountries(countries : List<Country>?) {
