@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -44,6 +46,7 @@ class CoinAddActivity : AppCompatActivity() {
     private var coin: Coin? = null
     private var savedInstance = false
     private var disposableList : MutableList<Disposable> = mutableListOf()
+    private var coinValueSetFromCode = false
 
 
     fun onCountryLoaded(countries: List<Country>) {
@@ -141,6 +144,35 @@ class CoinAddActivity : AppCompatActivity() {
                         },
                         {t: Throwable -> onCountryLoadError(t)}
                 ))
+
+        ui_et_coin_value.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                if (coinValueSetFromCode) {
+                    coinValueSetFromCode = false;
+                    return;
+                }
+                if (p0 != null) {
+                    if (TextUtils.isEmpty(p0.toString())) {
+                        ui_et_coin_value.error = getString(R.string.mandatory_field)
+                        return
+                    }
+                    val doubleValue : Double? = p0.toString().replace(',', '.').toDoubleOrNull()
+                    if (doubleValue == null || doubleValue < 0) {
+                        ui_et_coin_value.error = getString(R.string.coin_value_must_be_positive)
+                        return
+                    }
+                } else {
+                    ui_et_coin_value.error = getString(R.string.mandatory_field)
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+        })
     }
 
     override fun onPostResume() {
@@ -155,12 +187,13 @@ class CoinAddActivity : AppCompatActivity() {
 
     private fun onAddButtonClick() {
         val selectedCountry : Country = ui_sp_country.selectedItem as Country
-        val coinValue : Double? = ui_et_coin_value.text.toString().toDoubleOrNull()
-        if (coinValue == null) {
+
+        if (TextUtils.isEmpty(ui_et_coin_value.text.toString())) {
             ui_et_coin_value.error = getString(R.string.mandatory_field)
             return
         }
-        if (coinValue < 0) {
+        val coinValue : Double? = ui_et_coin_value.text.toString().replace(',', '.').toDoubleOrNull()
+        if (coinValue == null || coinValue < 0) {
             ui_et_coin_value.error = getString(R.string.coin_value_must_be_positive)
             return
         }
@@ -193,6 +226,7 @@ class CoinAddActivity : AppCompatActivity() {
 
     fun resetFields() {
         ui_sp_country.setSelection(0)
+        coinValueSetFromCode = true
         ui_et_coin_value.setText("")
         ui_et_coin_description.setText("")
         ui_iv_coin_picture.visibility = View.GONE

@@ -74,7 +74,9 @@
                     android:id="@+id/ui_et_coin_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/coin_value" />
+                    android:hint="@string/coin_value"
+                    android:inputType="phone"
+                    android:digits="@string/decimal_number_digits"/>
             </fr.vbastien.mycoincollector.util.CustomTextInputLayout>
 
             <fr.vbastien.mycoincollector.util.CustomTextInputLayout
