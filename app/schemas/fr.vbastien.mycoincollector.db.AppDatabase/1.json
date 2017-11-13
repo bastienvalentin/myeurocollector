@@ -2,31 +2,35 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "96a62b1a45511acd39713c6f0dab63c4",
+    "identityHash": "717cb4d3d135b2dfb48f52c5b42e0cc7",
     "entities": [
       {
         "tableName": "country",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`country_id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `code` TEXT, `since` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`country_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `code` TEXT NOT NULL, `since` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "countryId",
             "columnName": "country_id",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "code",
             "columnName": "code",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "since",
             "columnName": "since",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -40,32 +44,37 @@
       },
       {
         "tableName": "coin",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`coin_id` INTEGER PRIMARY KEY AUTOINCREMENT, `country_id` INTEGER, `value` REAL, `img` TEXT, `description` TEXT, FOREIGN KEY(`coin_id`) REFERENCES `country`(`country_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`coin_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `country_id` INTEGER NOT NULL, `value` REAL NOT NULL, `img` TEXT, `description` TEXT, FOREIGN KEY(`coin_id`) REFERENCES `country`(`country_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "coinId",
             "columnName": "coin_id",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "countryId",
             "columnName": "country_id",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "value",
             "columnName": "value",
-            "affinity": "REAL"
+            "affinity": "REAL",
+            "notNull": true
           },
           {
             "fieldPath": "img",
             "columnName": "img",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "description",
             "columnName": "description",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -92,7 +101,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"96a62b1a45511acd39713c6f0dab63c4\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"717cb4d3d135b2dfb48f52c5b42e0cc7\")"
     ]
   }
 }
