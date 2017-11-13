@@ -1,9 +1,9 @@
 package fr.vbastien.mycoincollector.controller.country
 
-import android.arch.lifecycle.LifecycleActivity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_list_country.*
 
-class CountryListActivity : LifecycleActivity() {
+class CountryListActivity : AppCompatActivity() {
 
     private var disposableList : MutableList<Disposable> = mutableListOf()
 
@@ -32,6 +32,7 @@ class CountryListActivity : LifecycleActivity() {
 
     fun onCountryLoadError(error: Throwable) {
         Crashlytics.logException(error)
+        error.printStackTrace()
         Snackbar.make(ui_cl_container, R.string.loading_error, Snackbar.LENGTH_SHORT).show()
     }
 
@@ -41,7 +42,7 @@ class CountryListActivity : LifecycleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_country)
-        setActionBar(ui_toolbar)
+        setSupportActionBar(ui_toolbar)
 
         countryAdapter = CountryAdapter(this, countryList)
         ui_rv_countrylist.adapter = countryAdapter
@@ -85,7 +86,6 @@ class CountryListActivity : LifecycleActivity() {
                         {countries: List<Country> -> onCountryLoaded(countries)},
                         {
                             t: Throwable ->
-                            Crashlytics.logException(t)
                             onCountryLoadError(t)
                         }
                 ))

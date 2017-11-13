@@ -28,11 +28,11 @@ class CoinListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_coin)
-        setActionBar(ui_toolbar)
+        setSupportActionBar(ui_toolbar)
 
-        actionBar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if (actionBar != null) actionBar.setDisplayShowHomeEnabled(true)
+        if (supportActionBar != null) supportActionBar?.setDisplayShowHomeEnabled(true)
 
         if (savedInstanceState != null) {
             countryId = savedInstanceState.getInt("country_id")

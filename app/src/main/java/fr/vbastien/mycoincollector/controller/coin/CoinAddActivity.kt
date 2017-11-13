@@ -92,9 +92,9 @@ class CoinAddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coin_add)
-        setActionBar(ui_toolbar)
+        setSupportActionBar(ui_toolbar)
 
-        actionBar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         ui_ll_content.visibility = View.INVISIBLE
         ui_pb_loading.visibility = View.VISIBLE
