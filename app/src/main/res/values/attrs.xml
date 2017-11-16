@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleCoinView">
+        <attr name="possess" format="boolean" />
+        <attr name="coin_facial_value" format="string" />
+    </declare-styleable>
+</resources>

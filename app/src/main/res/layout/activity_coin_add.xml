@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <fr.vbastien.mycoincollector.util.CustomTextInputLayout
+            <fr.vbastien.mycoincollector.util.view.CustomTextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -70,9 +70,9 @@
                     android:hint="@string/coin_value"
                     android:inputType="phone"
                     android:digits="@string/decimal_number_digits"/>
-            </fr.vbastien.mycoincollector.util.CustomTextInputLayout>
+            </fr.vbastien.mycoincollector.util.view.CustomTextInputLayout>
 
-            <fr.vbastien.mycoincollector.util.CustomTextInputLayout
+            <fr.vbastien.mycoincollector.util.view.CustomTextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -84,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/description" />
-            </fr.vbastien.mycoincollector.util.CustomTextInputLayout>
+            </fr.vbastien.mycoincollector.util.view.CustomTextInputLayout>
 
             <LinearLayout
                 android:id="@+id/ui_ll_coin_picture"
@@ -109,7 +109,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/material_grey_400" />
             </LinearLayout>
-            <fr.vbastien.mycoincollector.util.SquareImageView
+            <fr.vbastien.mycoincollector.util.view.SquareImageView
                 android:id="@+id/ui_iv_coin_picture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

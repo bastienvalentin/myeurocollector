@@ -24,6 +24,40 @@ class SplashScreenActivity : AppCompatActivity() {
     private var countryCount = 0
     private var timeOutHandler : Handler? = null
     private var timeOutRunnable : Runnable? = null
+    private var ref : DatabaseReference? = null
+    private var valueListener : ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            try {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                @Suppress("UNCHECKED_CAST")
+
+                if (timeOutRunnable != null) {
+                    timeOutHandler?.removeCallbacks(timeOutRunnable)
+                }
+
+                val value: Map<String, Map<String, String>> = dataSnapshot.getValue(true) as Map<String, Map<String, String>>
+                val countryList = CountryBusiness.parseCountryListFromMap(value)
+                if (countryList.isNotEmpty()) {
+                    insertCountriesIntoDataSource(countryList)
+                } else if (countryCount == 0) {
+                    insertFallbackCountriesIntoDataSource()
+                } else {
+                    startApplication()
+                }
+            } catch (e: Exception) {
+                Crashlytics.logException(e)
+                e.printStackTrace()
+                insertFallbackCountriesIntoDataSource()
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            // Failed to read value from remote database
+            // we use fallback which is the country list already in the apk
+            insertFallbackCountriesIntoDataSource()
+        }
+    }
 
     fun onCountryInserted() {
         startApplication()
@@ -31,63 +65,34 @@ class SplashScreenActivity : AppCompatActivity() {
 
     fun onCountryInsertError(error: Throwable) {
         Crashlytics.logException(error)
+        error.printStackTrace()
         Snackbar.make(ui_cl_container, R.string.app_init_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry, { insertFallbackCountriesIntoDataSource() })
     }
 
     fun onCountryLoadError(error: Throwable) {
         Crashlytics.logException(error)
+        error.printStackTrace()
         Snackbar.make(ui_cl_container, R.string.app_init_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry, { countCountryInDataSource() })
     }
 
     fun onCountryLoaded(countries: Int) {
         countryCount = countries
+        startTimeOutTimer()
         loadCountryFromRemoteDatabase()
     }
 
     fun loadCountryFromRemoteDatabase() {
-        val database = FirebaseDatabase.getInstance()
-        val ref : DatabaseReference = database.getReference("countries")
-
-        ref.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                try {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    @Suppress("UNCHECKED_CAST")
-                    val value: Map<String, Map<String, String>> = dataSnapshot.getValue(true) as Map<String, Map<String, String>>
-                    val countryList = CountryBusiness.parseCountryListFromMap(value)
-                    if (countryList.isNotEmpty()) {
-                        insertCountriesIntoDataSource(countryList)
-                    } else if (countryCount == 0) {
-                        insertFallbackCountriesIntoDataSource()
-                    } else {
-                        startApplication()
-                    }
-                } catch (e: Exception) {
-                    Crashlytics.logException(e)
-                    e.printStackTrace()
-                    insertFallbackCountriesIntoDataSource()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Failed to read value from remote database
-                // we use fallback which is the country list already in the apk
-                insertFallbackCountriesIntoDataSource()
-            }
-        })
+        ref?.addValueEventListener(valueListener)
     }
 
     fun insertCountriesIntoDataSource(countryList : List<Country>) {
         disposableList.add(Completable.fromAction { countryList.forEach { country -> AppDatabase.getInMemoryDatabase(this).countryModel().insertCountry(country) } }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete { onCountryInserted() }
-                .doOnError { t : Throwable ->
+                .subscribe(this::onCountryInserted, { t: Throwable ->
                     Crashlytics.logException(t)
                     onCountryInsertError(t)
-                }
-                .subscribe())
+                }))
     }
 
     fun insertFallbackCountriesIntoDataSource() {
@@ -107,12 +112,12 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+        ref = FirebaseDatabase.getInstance().getReference("countries")
     }
 
     override fun onStart() {
         super.onStart()
         countCountryInDataSource()
-        startTimeOutTimer()
     }
 
     override fun onStop() {
@@ -121,9 +126,11 @@ class SplashScreenActivity : AppCompatActivity() {
         if (timeOutRunnable != null) {
             timeOutHandler?.removeCallbacks(timeOutRunnable)
         }
+        ref?.removeEventListener(valueListener)
     }
 
     private fun startApplication() {
+        Exception().printStackTrace()
         val i : Intent = Intent(this, CountryListActivity::class.java)
         startActivity(i)
         finish()
@@ -132,7 +139,13 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun startTimeOutTimer() {
         try {
             timeOutHandler = Handler()
-            timeOutRunnable = Runnable { startApplication() }
+            timeOutRunnable = Runnable {
+                if (countryCount == 0) {
+                    insertFallbackCountriesIntoDataSource()
+                } else {
+                    startApplication()
+                }
+            }
             timeOutHandler!!.postDelayed(timeOutRunnable, 2000)
         } catch (e : Exception) {
             Crashlytics.logException(e)

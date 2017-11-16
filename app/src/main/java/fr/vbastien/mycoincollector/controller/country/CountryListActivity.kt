@@ -14,7 +14,7 @@ import fr.vbastien.mycoincollector.controller.coin.CoinAddActivity
 import fr.vbastien.mycoincollector.controller.coin.CoinListActivity
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Country
-import fr.vbastien.mycoincollector.util.ItemClickSupport
+import fr.vbastien.mycoincollector.util.view.ItemClickSupport
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

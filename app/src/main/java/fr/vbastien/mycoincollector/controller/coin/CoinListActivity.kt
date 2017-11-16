@@ -4,10 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
-import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import com.crashlytics.android.Crashlytics
@@ -15,10 +12,12 @@ import com.crashlytics.android.Crashlytics
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.RequestCodes
 import fr.vbastien.mycoincollector.db.AppDatabase
-import fr.vbastien.mycoincollector.util.ItemClickSupport
+import fr.vbastien.mycoincollector.db.Coin
+import fr.vbastien.mycoincollector.util.view.ItemClickSupport
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_list_coin.*
+import kotlinx.android.synthetic.main.bar_simple_coin.*
 
 class CoinListActivity : AppCompatActivity() {
 
@@ -85,8 +84,24 @@ class CoinListActivity : AppCompatActivity() {
 
                     coinAdapter?.coinList = coinList
                     coinAdapter?.notifyDataSetChanged()
+                    displaySimpleCoin(coinList)
                 }
                 .subscribe()
+    }
+
+    private fun displaySimpleCoin(coinList : List<Coin>) {
+        for (coin in coinList) {
+            when (coin.value) {
+                2.0 -> ui_tv_two_euros.setPossess(true)
+                1.0 -> ui_tv_one_euro.setPossess(true)
+                0.5 -> ui_tv_fifty_cent.setPossess(true)
+                0.2 -> ui_tv_twenty_cent.setPossess(true)
+                0.1 -> ui_tv_ten_cent.setPossess(true)
+                0.05 -> ui_tv_five_cent.setPossess(true)
+                0.02 -> ui_tv_two_cent.setPossess(true)
+                0.01 -> ui_tv_one_cent.setPossess(true)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

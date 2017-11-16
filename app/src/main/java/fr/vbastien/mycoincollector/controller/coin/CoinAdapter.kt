@@ -14,8 +14,7 @@ import android.view.ViewGroup
 import com.squareup.picasso.Picasso
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.db.Coin
-import fr.vbastien.mycoincollector.util.SquareImageView
-import fr.vbastien.mycoincollector.util.ViewUtil
+import fr.vbastien.mycoincollector.util.view.ViewUtil
 
 
 /**

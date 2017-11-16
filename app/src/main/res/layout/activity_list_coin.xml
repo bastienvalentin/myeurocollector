@@ -11,14 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/ui_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:theme="@style/AppTheme.ToolBarStyle" />
+        <include layout="@layout/bar_simple_coin" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -33,7 +34,6 @@
             android:id="@+id/ui_rv_coinlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
         <TextView
             android:id="@+id/ui_tv_country_placeholder"
             android:layout_width="match_parent"

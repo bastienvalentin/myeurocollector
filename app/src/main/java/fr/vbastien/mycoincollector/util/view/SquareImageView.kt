@@ -1,4 +1,4 @@
-package fr.vbastien.mycoincollector.util
+package fr.vbastien.mycoincollector.util.view
 
 import android.content.Context
 import android.support.v7.widget.AppCompatImageView

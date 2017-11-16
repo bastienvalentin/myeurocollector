@@ -49,4 +49,13 @@
     <string name="continue_typing">Continuer la saisie</string>
     <string name="title_activity_coin_detail">Vue détaillée</string>
     <string name="decimal_number_digits">0123456789,</string>
+
+    <string name="two_euro">2€</string>
+    <string name="one_euro">1€</string>
+    <string name="fifty_cent">50c</string>
+    <string name="twenty_cent">20c</string>
+    <string name="ten_cent">10c</string>
+    <string name="five_cent">5c</string>
+    <string name="two_cent">2c</string>
+    <string name="one_cent">1c</string>
 </resources>

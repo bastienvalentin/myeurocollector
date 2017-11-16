@@ -21,7 +21,7 @@
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <fr.vbastien.mycoincollector.util.SquareImageView
+            <fr.vbastien.mycoincollector.util.view.SquareImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
