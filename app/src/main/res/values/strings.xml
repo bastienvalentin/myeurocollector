@@ -1,54 +1,54 @@
 <resources>
     <string name="app_name">MyCoinCollector</string>
-    <string name="add_coin_label">Ajouter une pièce</string>
-    <string name="country_label">Liste des pays</string>
-    <string name="coin_label">Liste des pièces</string>
+    <string name="add_coin_label">Add a coin</string>
+    <string name="country_label">Countries\' list</string>
+    <string name="coin_label">Coin\'s list</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
-    <string name="unknown_country">Pays inconnu</string>
+    <string name="unknown_country">Unknown country</string>
     <string name="france">France</string>
-    <string name="germany">Allemagne</string>
+    <string name="germany">Germany</string>
 
-    <string name="coin_loading">Chargement des pièces</string>
-    <string name="country_loading">Chargement des pays</string>
-    <string name="no_coin_explanation">Aucune pièce n\'est disponible dans la base de donnée</string>
-    <string name="add_coin_text">Ajouter une pièce</string>
-    <string name="loading_in_progress">Chargement en cours</string>
-    <string name="loading_error">Une erreur est survenue lors du chargement</string>
-    <string name="app_short_explanation">Emportez votre collection de pièces partout avec vous</string>
-    <string name="app_init_error">Une erreur est survenue lors du démarrage de l\'application</string>
-    <string name="retry">Réessayer</string>
+    <string name="coin_loading">Loading coins</string>
+    <string name="country_loading">Loading countries</string>
+    <string name="no_coin_explanation">No coin available in the database</string>
+    <string name="add_coin_text">Add a coin</string>
+    <string name="loading_in_progress">Loading in progress</string>
+    <string name="loading_error">An error occurred during loading</string>
+    <string name="app_short_explanation">Take your collection with you, anywhere</string>
+    <string name="app_init_error">An error occurred during the application start</string>
+    <string name="retry">Try again</string>
     <string name="description">Description</string>
-    <string name="coin_description_helper">Ajouter ici une description pour la pièce</string>
-    <string name="coin_value">Valeur faciale de la pièce (en euro)*</string>
-    <string name="coin_value_helper">Ex : 2 ou 2,00 pour 2€ , 0,50 pour 0,50€</string>
-    <string name="country_name">Nom du pays</string>
-    <string name="add_photo">Ajouter une photo</string>
-    <string name="edit_picture">Modifier la photo</string>
-    <string name="edit_picture_failed">Une erreur est survenue lors de l\'édition de la photo</string>
+    <string name="coin_description_helper">Add the coin\'s description</string>
+    <string name="coin_value">Value of the coin (in euro)*</string>
+    <string name="coin_value_helper">e.g : 2 or 2,00 for 2€ , 0,50 for 0,50€</string>
+    <string name="country_name">Country name</string>
+    <string name="add_photo">Add a picture</string>
+    <string name="edit_picture">Edit the picture</string>
+    <string name="edit_picture_failed">An error occurred during the picture edition</string>
 
-    <string name="crop_image_activity_title">Ajouter une photo</string>
-    <string name="crop_image_menu_rotate_left">Tourner dans le sens inverse des aiguilles</string>
-    <string name="crop_image_menu_rotate_right">Tourner</string>
-    <string name="crop_image_menu_crop">Découper</string>
-    <string name="crop_image_menu_flip">Retourner</string>
-    <string name="crop_image_menu_flip_horizontally">Retourner horizontalement</string>
-    <string name="crop_image_menu_flip_vertically">Retourner verticalement</string>
-    <string name="pick_image_intent_chooser_title">Selectionner une source</string>
+    <string name="crop_image_activity_title">Add a picture</string>
+    <string name="crop_image_menu_rotate_left">Turn counterclockwise</string>
+    <string name="crop_image_menu_rotate_right">Turn</string>
+    <string name="crop_image_menu_crop">Crop</string>
+    <string name="crop_image_menu_flip">Flip</string>
+    <string name="crop_image_menu_flip_horizontally">Flip horizontally</string>
+    <string name="crop_image_menu_flip_vertically">Flip vertically</string>
+    <string name="pick_image_intent_chooser_title">Select an input</string>
 
-    <string name="mandatory_field">Champ obligatoire</string>
-    <string name="coin_value_must_be_positive">La valeur faciale doit être positive. Si aucune valeur ne correspond renseignez 0</string>
-    <string name="coin_added">Pièce ajoutée</string>
-    <string name="coin_addition_error">Impossible d\'ajouter la pièce</string>
+    <string name="mandatory_field">Mandatory field</string>
+    <string name="coin_value_must_be_positive">The value must be positive. If no value can be set put 0</string>
+    <string name="coin_added">Coin added</string>
+    <string name="coin_addition_error">Unable to add the coin</string>
 
-    <string name="country_view_error">Impossible d\'afficher les pièces du pays</string>
-    <string name="coin_view_error">Impossible d\'afficher la pièce</string>
-    <string name="abort_edition_dialog_title">Abandon des modifications</string>
-    <string name="abort_edition_dialog_content">Si vous abandonnez les données saisies seront perdues.</string>
-    <string name="erase">Effacer</string>
-    <string name="continue_typing">Continuer la saisie</string>
-    <string name="title_activity_coin_detail">Vue détaillée</string>
-    <string name="decimal_number_digits">0123456789,</string>
+    <string name="country_view_error">Unable to display country coins</string>
+    <string name="coin_view_error">Unable to display the coin</string>
+    <string name="abort_edition_dialog_title">Abort edition</string>
+    <string name="abort_edition_dialog_content">If you quit, the values will be lost.</string>
+    <string name="erase">Erase</string>
+    <string name="continue_typing">Continue editing</string>
+    <string name="title_activity_coin_detail">Detailed view</string>
+    <string name="decimal_number_digits">0123456789.</string>
 
     <string name="two_euro">2€</string>
     <string name="one_euro">1€</string>

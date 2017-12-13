@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">MyCoinCollector</string>
+    <string name="add_coin_label">Ajouter une pièce</string>
+    <string name="country_label">Liste des pays</string>
+    <string name="coin_label">Liste des pièces</string>
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+
+    <string name="unknown_country">Pays inconnu</string>
+    <string name="france">France</string>
+    <string name="germany">Allemagne</string>
+
+    <string name="coin_loading">Chargement des pièces</string>
+    <string name="country_loading">Chargement des pays</string>
+    <string name="no_coin_explanation">Aucune pièce n\'est disponible dans la base de donnée</string>
+    <string name="add_coin_text">Ajouter une pièce</string>
+    <string name="loading_in_progress">Chargement en cours</string>
+    <string name="loading_error">Une erreur est survenue lors du chargement</string>
+    <string name="app_short_explanation">Emportez votre collection de pièces partout avec vous</string>
+    <string name="app_init_error">Une erreur est survenue lors du démarrage de l\'application</string>
+    <string name="retry">Réessayer</string>
+    <string name="description">Description</string>
+    <string name="coin_description_helper">Ajouter ici une description pour la pièce</string>
+    <string name="coin_value">Valeur faciale de la pièce (en euro)*</string>
+    <string name="coin_value_helper">Ex : 2 ou 2,00 pour 2€ , 0,50 pour 0,50€</string>
+    <string name="country_name">Nom du pays</string>
+    <string name="add_photo">Ajouter une photo</string>
+    <string name="edit_picture">Modifier la photo</string>
+    <string name="edit_picture_failed">Une erreur est survenue lors de l\'édition de la photo</string>
+
+    <string name="crop_image_activity_title">Ajouter une photo</string>
+    <string name="crop_image_menu_rotate_left">Tourner dans le sens inverse des aiguilles</string>
+    <string name="crop_image_menu_rotate_right">Tourner</string>
+    <string name="crop_image_menu_crop">Découper</string>
+    <string name="crop_image_menu_flip">Retourner</string>
+    <string name="crop_image_menu_flip_horizontally">Retourner horizontalement</string>
+    <string name="crop_image_menu_flip_vertically">Retourner verticalement</string>
+    <string name="pick_image_intent_chooser_title">Selectionner une source</string>
+
+    <string name="mandatory_field">Champ obligatoire</string>
+    <string name="coin_value_must_be_positive">La valeur faciale doit être positive. Si aucune valeur ne correspond renseignez 0</string>
+    <string name="coin_added">Pièce ajoutée</string>
+    <string name="coin_addition_error">Impossible d\'ajouter la pièce</string>
+
+    <string name="country_view_error">Impossible d\'afficher les pièces du pays</string>
+    <string name="coin_view_error">Impossible d\'afficher la pièce</string>
+    <string name="abort_edition_dialog_title">Abandon des modifications</string>
+    <string name="abort_edition_dialog_content">Si vous abandonnez les données saisies seront perdues.</string>
+    <string name="erase">Effacer</string>
+    <string name="continue_typing">Continuer la saisie</string>
+    <string name="title_activity_coin_detail">Vue détaillée</string>
+    <string name="decimal_number_digits">0123456789,</string>
+
+    <string name="two_euro">2€</string>
+    <string name="one_euro">1€</string>
+    <string name="fifty_cent">50c</string>
+    <string name="twenty_cent">20c</string>
+    <string name="ten_cent">10c</string>
+    <string name="five_cent">5c</string>
+    <string name="two_cent">2c</string>
+    <string name="one_cent">1c</string>
+</resources>
