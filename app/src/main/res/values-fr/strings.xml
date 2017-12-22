@@ -3,7 +3,6 @@
     <string name="add_coin_label">Ajouter une pièce</string>
     <string name="country_label">Liste des pays</string>
     <string name="coin_label">Liste des pièces</string>
-    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
     <string name="unknown_country">Pays inconnu</string>
     <string name="france">France</string>
