@@ -26,6 +26,7 @@ class SplashScreenActivity : AppCompatActivity() {
     private var timeOutRunnable : Runnable? = null
     private var ref : DatabaseReference? = null
     private var valueListener : ValueEventListener = object : ValueEventListener {
+        @Suppress("UNCHECKED_CAST")
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             try {
                 // This method is called once with the initial value and again
@@ -38,12 +39,10 @@ class SplashScreenActivity : AppCompatActivity() {
 
                 val value: Map<String, Map<String, String>> = dataSnapshot.getValue(true) as Map<String, Map<String, String>>
                 val countryList = CountryBusiness.parseCountryListFromMap(value)
-                if (countryList.isNotEmpty()) {
-                    insertCountriesIntoDataSource(countryList)
-                } else if (countryCount == 0) {
-                    insertFallbackCountriesIntoDataSource()
-                } else {
-                    startApplication()
+                when {
+                    countryList.isNotEmpty() -> insertCountriesIntoDataSource(countryList)
+                    countryCount == 0 -> insertFallbackCountriesIntoDataSource()
+                    else -> startApplication()
                 }
             } catch (e: Exception) {
                 Crashlytics.logException(e)
@@ -59,29 +58,29 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
-    fun onCountryInserted() {
+    private fun onCountryInserted() {
         startApplication()
     }
 
-    fun onCountryInsertError(error: Throwable) {
+    private fun onCountryInsertError(error: Throwable) {
         Crashlytics.logException(error)
         error.printStackTrace()
         Snackbar.make(ui_cl_container, R.string.app_init_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry, { insertFallbackCountriesIntoDataSource() })
     }
 
-    fun onCountryLoadError(error: Throwable) {
+    private fun onCountryLoadError(error: Throwable) {
         Crashlytics.logException(error)
         error.printStackTrace()
         Snackbar.make(ui_cl_container, R.string.app_init_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.retry, { countCountryInDataSource() })
     }
 
-    fun onCountryLoaded(countries: Int) {
+    private fun onCountryLoaded(countries: Int) {
         countryCount = countries
         startTimeOutTimer()
         loadCountryFromRemoteDatabase()
     }
 
-    fun loadCountryFromRemoteDatabase() {
+    private fun loadCountryFromRemoteDatabase() {
         ref?.addValueEventListener(valueListener)
     }
 
@@ -99,7 +98,7 @@ class SplashScreenActivity : AppCompatActivity() {
         insertCountriesIntoDataSource(CountryBusiness.countries)
     }
 
-    fun countCountryInDataSource() {
+    private fun countCountryInDataSource() {
         disposableList.add(AppDatabase.getInMemoryDatabase(this).countryModel().countCountries()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -131,7 +130,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun startApplication() {
         Exception().printStackTrace()
-        val i : Intent = Intent(this, CountryListActivity::class.java)
+        val i = Intent(this, CountryListActivity::class.java)
         startActivity(i)
         finish()
     }
