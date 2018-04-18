@@ -1,4 +1,4 @@
-package fr.vbastien.mycoincollector.controller.country
+package fr.vbastien.mycoincollector.features.country
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,8 @@ import android.view.View
 import com.crashlytics.android.Crashlytics
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.RequestCodes
-import fr.vbastien.mycoincollector.controller.coin.CoinAddActivity
-import fr.vbastien.mycoincollector.controller.coin.CoinListActivity
+import fr.vbastien.mycoincollector.features.coin.add.CoinAddActivity
+import fr.vbastien.mycoincollector.features.coin.list.CoinListActivity
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Country
 import fr.vbastien.mycoincollector.util.view.ItemClickSupport

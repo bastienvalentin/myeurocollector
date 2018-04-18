@@ -36,18 +36,5 @@ class CountryBusiness {
                 Country(25, "kosovo", "xk", "01/01/2002")
         )
 
-        fun parseCountryListFromMap(mappedCountries : Map<String, Map<String, String>>) : List<Country> {
-            val countryList : MutableList<Country> = mutableListOf()
-            mappedCountries.keys.forEach { key ->  countryList.add(parseCountryFromMap(mappedCountries.get(key)!!))}
-            return countryList
-        }
-
-        fun parseCountryFromMap(mappedCountry : Map<String, String>) : Country {
-            return Country(
-                    mappedCountry.get("id")!!.toInt(),
-                    mappedCountry.get("name")!!.toString(),
-                    mappedCountry.get("code")!!.toString(),
-                    if (mappedCountry.get("since") != null) mappedCountry.get("since").toString() else "")
-        }
     }
 }

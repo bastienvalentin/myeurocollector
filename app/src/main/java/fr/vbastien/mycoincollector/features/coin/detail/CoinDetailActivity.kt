@@ -1,10 +1,7 @@
-package fr.vbastien.mycoincollector.controller.coin
+package fr.vbastien.mycoincollector.features.coin.detail
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.TextUtils
@@ -15,17 +12,13 @@ import com.crashlytics.android.Crashlytics
 import com.squareup.picasso.Picasso
 
 import fr.vbastien.mycoincollector.R
+import fr.vbastien.mycoincollector.features.coin.add.CoinAddActivity
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Coin
-import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_coin_add.*
 import kotlinx.android.synthetic.main.activity_coin_detail.*
-import org.reactivestreams.Subscriber
-import java.util.function.BiConsumer
 
 class CoinDetailActivity : AppCompatActivity() {
 

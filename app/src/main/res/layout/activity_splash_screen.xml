@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/ui_cl_container"
-    tools:context="fr.vbastien.mycoincollector.controller.splashscreen.SplashScreenActivity"
+    tools:context=".features.splashscreen.SplashScreenActivity"
     android:gravity="center"
     >
     <LinearLayout

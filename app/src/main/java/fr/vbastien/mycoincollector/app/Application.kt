@@ -1,4 +1,4 @@
-package fr.vbastien.mycoincollector.controller
+package fr.vbastien.mycoincollector.app
 
 import android.app.Application
 import com.crashlytics.android.Crashlytics

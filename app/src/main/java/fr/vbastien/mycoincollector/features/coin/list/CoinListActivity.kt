@@ -1,4 +1,4 @@
-package fr.vbastien.mycoincollector.controller.coin
+package fr.vbastien.mycoincollector.features.coin.list
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -11,6 +11,7 @@ import com.crashlytics.android.Crashlytics
 
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.RequestCodes
+import fr.vbastien.mycoincollector.features.coin.add.CoinAddActivity
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Coin
 import fr.vbastien.mycoincollector.util.view.ItemClickSupport

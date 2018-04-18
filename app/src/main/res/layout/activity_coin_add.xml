@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/ui_cl_cointainer"
-    tools:context="fr.vbastien.mycoincollector.controller.coin.CoinAddActivity">
+    tools:context=".features.coin.add.CoinAddActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/ui_al_layout"

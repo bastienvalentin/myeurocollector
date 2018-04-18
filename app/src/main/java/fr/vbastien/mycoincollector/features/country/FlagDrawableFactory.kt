@@ -1,4 +1,4 @@
-package fr.vbastien.mycoincollector.controller.country
+package fr.vbastien.mycoincollector.features.country
 
 import fr.vbastien.mycoincollector.R
 
