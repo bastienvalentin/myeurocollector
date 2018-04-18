@@ -1,4 +1,4 @@
-package fr.vbastien.mycoincollector.controller.country
+package fr.vbastien.mycoincollector.features.country
 
 import android.content.Context
 import android.support.v4.content.ContextCompat

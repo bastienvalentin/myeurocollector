@@ -1,4 +1,4 @@
 <menu
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="fr.vbastien.mycoincollector.controller.country.CountryActivity">
+    tools:context=".features.country.CountryActivity">
 </menu>

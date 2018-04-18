@@ -1,4 +1,4 @@
-package fr.vbastien.mycoincollector.controller.coin
+package fr.vbastien.mycoincollector.features.coin.add
 
 import android.content.Context
 import android.content.Intent
@@ -25,7 +25,7 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 
 import fr.vbastien.mycoincollector.R
-import fr.vbastien.mycoincollector.controller.country.FlagDrawableFactory
+import fr.vbastien.mycoincollector.features.country.FlagDrawableFactory
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Coin
 import fr.vbastien.mycoincollector.db.Country

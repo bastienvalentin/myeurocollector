@@ -1,4 +1,4 @@
-package fr.vbastien.mycoincollector.controller.splashscreen
+package fr.vbastien.mycoincollector.features.splashscreen
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import com.crashlytics.android.Crashlytics
 import fr.vbastien.mycoincollector.R
 import fr.vbastien.mycoincollector.business.CountryBusiness
-import fr.vbastien.mycoincollector.controller.country.CountryListActivity
+import fr.vbastien.mycoincollector.features.country.CountryListActivity
 import fr.vbastien.mycoincollector.db.AppDatabase
 import fr.vbastien.mycoincollector.db.Country
 import io.reactivex.Completable
@@ -41,6 +41,8 @@ class SplashScreenActivity : AppCompatActivity() {
         countryCount = countries
         if (countryCount == 0) {
             insertCountriesIntoDataSource()
+        } else {
+            startApplication()
         }
     }
 

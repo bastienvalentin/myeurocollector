@@ -1,4 +1,4 @@
-package fr.vbastien.mycoincollector.controller.coin
+package fr.vbastien.mycoincollector.features.coin.list
 
 import android.support.v7.widget.RecyclerView
 import android.content.Context
